@@ -58,7 +58,7 @@ function VideoCard() {
         {/* Video thumbnail */}
         <div className="relative shrink-0 h-[96px] w-[152px] flex items-center justify-center cursor-pointer group">
           <Image
-            src="/CONTAINER.svg"
+            src="/Container.svg"
             alt="Latest from Bitscale Video"
             fill
             className="object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-sm"
