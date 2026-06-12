@@ -10,9 +10,9 @@ export interface GridRow {
   iconColor?: string;
   isWorkbook?: boolean;
   starred: boolean;
-  editedBy: { name: string; initials: string; color: string };
+  editedBy: { name: string; initials: string; color: string; avatar?: string };
   lastEdited: string;
-  status: string; // "completed" | "running" | "draft"
+  status: string;
   rows: number;
 }
 
@@ -23,7 +23,7 @@ const initialGrids: GridRow[] = [
     icon: "Workbook",
     isWorkbook: true,
     starred: false,
-    editedBy: { name: "Sam Taylor", initials: "ST", color: "bg-blue-500" },
+    editedBy: { name: "Sam Taylor", initials: "ST", color: "bg-blue-500", avatar: "/avatar-sam.png" },
     lastEdited: "06 Aug, 2025",
     status: "completed",
     rows: 0,
@@ -35,7 +35,7 @@ const initialGrids: GridRow[] = [
     iconBg: "bg-blue-600 dark:bg-blue-600",
     iconColor: "text-white",
     starred: false,
-    editedBy: { name: "Chris Parker", initials: "CP", color: "bg-emerald-500" },
+    editedBy: { name: "Chris Parker", initials: "CP", color: "bg-emerald-500", avatar: "/avatar-chris.png" },
     lastEdited: "06 Aug, 2025",
     status: "completed",
     rows: 842,
@@ -47,7 +47,7 @@ const initialGrids: GridRow[] = [
     iconBg: "bg-violet-600 dark:bg-violet-600",
     iconColor: "text-white",
     starred: false,
-    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400" },
+    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400", avatar: "/avatar-jone.png" },
     lastEdited: "06 Aug, 2025",
     status: "running",
     rows: 314,
@@ -59,7 +59,7 @@ const initialGrids: GridRow[] = [
     iconBg: "bg-emerald-500 dark:bg-emerald-500",
     iconColor: "text-white",
     starred: false,
-    editedBy: { name: "Alex Morgan", initials: "AM", color: "bg-purple-500" },
+    editedBy: { name: "Alex Morgan", initials: "AM", color: "bg-purple-500", avatar: "/avatar-alex.png" },
     lastEdited: "06 Aug, 2025",
     status: "completed",
     rows: 127,
@@ -71,7 +71,7 @@ const initialGrids: GridRow[] = [
     iconBg: "bg-gray-700 dark:bg-gray-600",
     iconColor: "text-white",
     starred: false,
-    editedBy: { name: "Drew Wilson", initials: "DW", color: "bg-red-500" },
+    editedBy: { name: "Drew Wilson", initials: "DW", color: "bg-red-500", avatar: "/avatar-drew.png" },
     lastEdited: "06 Aug, 2025",
     status: "draft",
     rows: 0,
@@ -83,7 +83,7 @@ const initialGrids: GridRow[] = [
     iconBg: "bg-purple-500 dark:bg-purple-500",
     iconColor: "text-white",
     starred: false,
-    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400" },
+    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400", avatar: "/avatar-jone.png" },
     lastEdited: "06 Aug, 2025",
     status: "completed",
     rows: 2103,
@@ -95,7 +95,7 @@ const initialGrids: GridRow[] = [
     iconBg: "bg-green-500 dark:bg-green-500",
     iconColor: "text-white",
     starred: false,
-    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400" },
+    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400", avatar: "/avatar-jone.png" },
     lastEdited: "06 Aug, 2025",
     status: "completed",
     rows: 45,
@@ -107,7 +107,7 @@ const initialGrids: GridRow[] = [
     iconBg: "bg-blue-400 dark:bg-blue-400",
     iconColor: "text-white",
     starred: false,
-    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400" },
+    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400", avatar: "/avatar-jone.png" },
     lastEdited: "06 Aug, 2025",
     status: "completed",
     rows: 88,
@@ -119,7 +119,7 @@ const initialGrids: GridRow[] = [
     iconBg: "bg-rose-500 dark:bg-rose-500",
     iconColor: "text-white",
     starred: false,
-    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400" },
+    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400", avatar: "/avatar-jone.png" },
     lastEdited: "06 Aug, 2025",
     status: "completed",
     rows: 12,
@@ -131,7 +131,7 @@ const initialGrids: GridRow[] = [
     iconBg: "bg-orange-500 dark:bg-orange-500",
     iconColor: "text-white",
     starred: false,
-    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400" },
+    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400", avatar: "/avatar-jone.png" },
     lastEdited: "06 Aug, 2025",
     status: "completed",
     rows: 156,

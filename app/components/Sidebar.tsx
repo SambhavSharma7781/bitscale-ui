@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -10,6 +11,10 @@ import {
   Settings,
   ChevronDown,
   ChevronUp,
+  ChevronsUpDown,
+  ChevronRight,
+  Rocket,
+  Sidebar as SidebarIcon,
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -27,7 +32,7 @@ interface NavItem {
 
 const navItemsHome: NavItem[] = [
   { label: "My Dashboard", href: "/dashboard", icon: LayoutDashboard, built: true },
-  { label: "Playbooks",    href: "/playbooks",    icon: BookOpen,        built: false, badge: "🚀" },
+  { label: "Playbooks",    href: "/playbooks",    icon: SidebarIcon,     built: false, badge: "rocket" },
   { label: "Integrations", href: "/integrations", icon: Plug,            built: false },
 ];
 
@@ -68,14 +73,19 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             className={cn(
               "w-full group flex items-center gap-3 rounded-md px-3 py-2 text-[13px] font-medium cursor-pointer",
               "transition-all duration-150 ease-out",
-              "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100"
+              "text-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100"
             )}
           >
             <span className="flex h-[18px] w-[18px] items-center justify-center shrink-0 text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
               <Icon className="h-4 w-4" />
             </span>
             <span className="truncate text-left">{item.label}</span>
-            {item.badge && <span className="ml-auto text-[14px] leading-none">{item.badge}</span>}
+            {item.badge === "rocket" && (
+              <div className="ml-auto flex items-center justify-center bg-[#faeddd] text-[#c2842c] rounded-full px-2 py-0.5">
+                <Rocket className="h-3 w-3" />
+              </div>
+            )}
+            {item.badge && item.badge !== "rocket" && <span className="ml-auto text-[13px] leading-none">{item.badge}</span>}
           </button>
         );
       }
@@ -91,8 +101,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             "group flex items-center gap-3 rounded-md px-3 py-2 text-[13px] font-medium cursor-pointer",
             "transition-all duration-150 ease-out",
             active
-              ? "bg-blue-50/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-semibold"
-              : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100"
+              ? "bg-gray-100/80 dark:bg-gray-800/80 text-blue-600 dark:text-blue-400"
+              : "text-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100"
           )}
         >
           <span
@@ -106,7 +116,13 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             <Icon className="h-4 w-4" />
           </span>
           <span className="truncate">{item.label}</span>
-          {item.badge && <span className="ml-auto text-[14px] leading-none">{item.badge}</span>}
+          {active && <ChevronRight className="ml-auto h-3.5 w-3.5 text-blue-600 dark:text-blue-400 shrink-0" />}
+          {item.badge === "rocket" && (
+            <div className="ml-auto flex items-center justify-center bg-[#faeddd] text-[#c2842c] rounded-full px-2 py-0.5">
+              <Rocket className="h-3 w-3" />
+            </div>
+          )}
+          {item.badge && item.badge !== "rocket" && <span className="ml-auto text-[13px] leading-none">{item.badge}</span>}
         </Link>
       );
     });
@@ -133,9 +149,14 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         {/* ── Logo & Workspace Header ── */}
         <div className="flex flex-col">
           <div className="flex items-center justify-between px-5 h-16 shrink-0 border-b border-gray-200 dark:border-gray-800">
-            <span className="text-[22px] font-bold italic tracking-tight text-gray-900 dark:text-white">
-              Bitscale
-            </span>
+            <Image
+              src="/bitscale-logo-light.svg"
+              alt="Bitscale"
+              width={120}
+              height={32}
+              className="w-auto h-7 dark:invert"
+              priority
+            />
             <button
               onClick={onClose}
               className="flex h-7 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer transition-colors lg:hidden"
@@ -144,26 +165,25 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             </button>
           </div>
 
-          <div className="px-3 py-3 border-b border-gray-200 dark:border-gray-800">
-            <button className="flex w-full items-center justify-between rounded-xl px-2 py-2 hover:bg-gray-50 dark:hover:bg-gray-800/60 cursor-pointer transition-colors group">
+          <div className="px-3 py-2 border-b border-gray-200 dark:border-gray-800">
+            <button className="flex w-full items-center justify-between rounded-xl px-2 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-800/60 cursor-pointer transition-colors group">
               <div className="flex items-center gap-3">
                 {/* Two overlapping circular avatars */}
                 <div className="flex items-center shrink-0">
-                  <div className="h-9 w-9 rounded-full overflow-hidden ring-2 ring-white dark:ring-gray-900 shadow-sm z-10">
+                  <div className="h-6 w-6 rounded-full overflow-hidden ring-2 ring-white dark:ring-gray-900 shadow-sm relative z-0">
                     <img src="/avatar.png" alt="Member 1" className="h-full w-full object-cover" />
                   </div>
-                  <div className="h-9 w-9 rounded-full overflow-hidden ring-2 ring-white dark:ring-gray-900 shadow-sm -ml-3">
+                  <div className="h-6 w-6 rounded-full overflow-hidden ring-2 ring-white dark:ring-gray-900 shadow-sm -ml-2 relative z-10">
                     <img src="/avatar2.png" alt="Member 2" className="h-full w-full object-cover" />
                   </div>
                 </div>
-                <span className="text-[15px] font-bold text-gray-900 dark:text-gray-100 tracking-tight">
+                <span className="text-[14px] font-semibold text-gray-800 dark:text-gray-100 tracking-tight">
                   GTM Spaces
                 </span>
               </div>
               {/* Up/down chevron */}
-              <div className="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
-                <ChevronUp className="h-3 w-3 -mb-0.5" />
-                <ChevronDown className="h-3 w-3" />
+              <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
+                <ChevronsUpDown className="h-3.5 w-3.5" />
               </div>
             </button>
           </div>
@@ -174,15 +194,15 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
           {/* Home Section */}
           <div className="space-y-0.5">
-            <p className="px-3 mb-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+            <p className="px-3 mb-2 text-[12px] font-medium text-gray-500 dark:text-gray-400">
               Home
             </p>
             {renderNavList(navItemsHome)}
           </div>
 
           {/* Other Section */}
-          <div className="space-y-0.5">
-            <p className="px-3 mb-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+          <div className="space-y-0.5 mt-8">
+            <p className="px-3 mb-2 text-[12px] font-medium text-gray-500 dark:text-gray-400">
               Other
             </p>
             {renderNavList(navItemsOther)}

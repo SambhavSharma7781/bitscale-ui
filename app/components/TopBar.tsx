@@ -21,19 +21,14 @@ export function TopBar({ onMenuClick }: TopBarProps) {
   const creditsUsed = 450000;
   const creditsTotal = 5500000;
 
-  const formatCredits = (n: number) =>
-    n >= 1_000_000
-      ? `${(n / 1_000_000).toFixed(1)}M`
-      : n >= 1_000
-      ? `${(n / 1_000).toFixed(0)}K`
-      : n.toString();
+  const formatCredits = (n: number) => n.toString();
 
   const toggleTheme = () => {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
   return (
-    <header className="sticky top-0 z-10 flex h-16 w-full items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 md:px-6">
+    <header className="sticky top-0 z-10 flex h-14 w-full items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 md:px-6">
       {/* Left side — mobile menu only */}
       <div className="flex items-center">
         <button
@@ -47,22 +42,6 @@ export function TopBar({ onMenuClick }: TopBarProps) {
 
       {/* Right — credits, badge, actions, avatar */}
       <div className="flex items-center gap-2 sm:gap-3">
-        {/* Credits & Booster Plan pill */}
-        <div className="hidden sm:flex items-center gap-3 rounded-full bg-[#f1f5f2] dark:bg-[#1a2332] pl-3 pr-1.5 py-1.5 border border-transparent dark:border-[#2a3a4a]">
-          <div className="flex items-center gap-2 pl-1">
-            <Coins className="h-[18px] w-[18px] text-[#42795a] dark:text-[#7db898]" strokeWidth={2} />
-            <span className="text-[15px] font-medium text-[#42795a] dark:text-[#a8c5b0] tracking-tight">
-              {formatCredits(creditsUsed)}/{formatCredits(creditsTotal)}
-            </span>
-          </div>
-          <button className="flex items-center justify-center rounded-full bg-[#42795a] dark:bg-[#2d5a40] px-3.5 py-1.5 hover:bg-[#36634a] dark:hover:bg-[#3a6e4e] cursor-pointer transition-colors">
-            <span className="text-[13px] font-medium text-white tracking-wide">Booster Plan</span>
-          </button>
-        </div>
-
-        {/* Divider */}
-        <div className="hidden md:block h-6 w-px bg-gray-200 dark:bg-gray-700" />
-
         {/* Dark mode toggle */}
         <button
           id="theme-toggle-btn"
@@ -75,30 +54,31 @@ export function TopBar({ onMenuClick }: TopBarProps) {
           <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
         </button>
 
-        {/* Notification bell */}
-        <button className="relative flex h-8 w-8 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer transition-colors">
-          <Bell className="h-4 w-4" />
-          <span className="absolute top-1.5 right-1.5 h-1.5 w-1.5 rounded-full bg-blue-500" />
-        </button>
+        {/* Credits & Booster Plan pill */}
+        <div className="hidden sm:flex items-center gap-3 rounded-[8px] bg-[#edf2ef] dark:bg-[#1a2332] pl-2.5 pr-1.5 py-1.5 border border-transparent dark:border-[#2a3a4a] ml-1">
+          <div className="flex items-center gap-1.5 pl-0.5">
+            <Coins className="h-4 w-4 text-[#3d7756] dark:text-[#7db898]" strokeWidth={2} />
+            <span className="text-[13px] font-medium text-[#3d7756] dark:text-[#a8c5b0] tracking-tight">
+              {formatCredits(creditsUsed)}/{formatCredits(creditsTotal)}
+            </span>
+          </div>
+          <button className="flex items-center justify-center rounded-[6px] bg-[#42795a] dark:bg-[#2d5a40] px-3 py-1 hover:bg-[#36634a] dark:hover:bg-[#3a6e4e] cursor-pointer transition-colors">
+            <span className="text-[12px] font-medium text-white tracking-wide">Booster Plan</span>
+          </button>
+        </div>
 
         {/* User avatar */}
-        <div className="relative">
+        <div className="relative ml-2">
           <button
             onClick={() => setIsProfileOpen((p) => !p)}
-            className="flex items-center gap-2 rounded-lg p-1 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors"
+            className="flex items-center rounded-full hover:ring-2 hover:ring-gray-100 dark:hover:ring-gray-800 cursor-pointer transition-all"
           >
-            <Avatar className="h-7 w-7 ring-2 ring-white dark:ring-gray-900 shadow-sm">
-              <AvatarImage src="" alt="Sambhav Sharma" />
+            <Avatar className="h-7 w-7 border border-gray-200 dark:border-gray-700 shadow-sm">
+              <AvatarImage src="/avatar.png" alt="User Avatar" />
               <AvatarFallback className="bg-gradient-to-br from-blue-500 to-violet-600 text-white text-[11px] font-bold">
                 SS
               </AvatarFallback>
             </Avatar>
-            <ChevronDown
-              className={cn(
-                "hidden sm:block h-3.5 w-3.5 text-gray-400 dark:text-gray-500 transition-transform duration-200",
-                isProfileOpen && "rotate-180"
-              )}
-            />
           </button>
 
           {/* Profile dropdown */}

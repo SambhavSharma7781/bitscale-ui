@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState, KeyboardEvent } from "react";
 import {
-  X, Search, ChevronDown, Eye, BookmarkPlus, Lock,
+  X, Search, ChevronDown, Eye, BookmarkPlus, Unlock,
   Users, Briefcase, Globe, MapPin, Building2, BarChart2, Layers,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -64,69 +65,53 @@ function FilterRow({ section, tags, onAdd, onRemove }: {
   const Icon = section.icon;
 
   return (
-    <div className="border-b border-gray-100 dark:border-gray-800">
+    <div>
       <button
         type="button" onClick={() => setOpen(v => !v)}
         className="w-full flex items-center justify-between px-5 py-3 hover:bg-gray-50/70 dark:hover:bg-gray-800/50 cursor-pointer transition-colors text-left"
       >
         <div className="flex items-center gap-3">
-          <Icon className="h-4 w-4 text-gray-400 dark:text-gray-500 shrink-0" />
+          <Icon strokeWidth={2.5} className="h-[18px] w-[18px] text-gray-900 dark:text-gray-100 shrink-0" />
           <div>
-            <p className="text-[13.5px] font-semibold text-gray-800 dark:text-gray-100 leading-snug">{section.label}</p>
+            <p className="text-[14px] font-bold text-gray-900 dark:text-gray-100 leading-snug">{section.label}</p>
             {(!open || tags.length === 0) && (
-              <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{section.hint}</p>
+              <p className="text-[13px] font-medium text-gray-400 dark:text-gray-500 mt-0.5">{section.hint}</p>
             )}
             {open && tags.length > 0 && (
               <p className="text-xs text-blue-500 mt-0.5">{tags.length} filter{tags.length > 1 ? "s" : ""} applied</p>
             )}
           </div>
         </div>
-        <ChevronDown className={cn("h-4 w-4 text-gray-400 shrink-0 transition-transform duration-200", open && "rotate-180")} />
+        <ChevronDown strokeWidth={3} className={cn("h-4 w-4 text-gray-900 dark:text-gray-100 shrink-0 transition-transform duration-200", open && "rotate-180")} />
       </button>
       <div className={cn("overflow-hidden transition-all duration-200", open ? "max-h-48" : "max-h-0")}>
         <div className="px-5 pb-4">
           <TagInput tags={tags} onAdd={t => onAdd(section.id, t)} onRemove={t => onRemove(section.id, t)} />
         </div>
       </div>
+      <div className="h-px bg-gray-100 dark:bg-gray-800 mx-5" />
     </div>
   );
 }
 
-function EmptyState() {
+function EmptyState({ label = 'People' }: { label?: string }) {
   return (
-    <div className="flex flex-col items-center justify-center py-10 px-6 select-none text-center">
-      <svg viewBox="0 0 180 190" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-36 h-36 mb-4" aria-hidden="true">
-        <ellipse cx="90" cy="182" rx="52" ry="7" fill="#e9ecef"/>
-        <rect x="32" y="26" width="108" height="148" rx="9" fill="#f8fafc" stroke="#dde1e7" strokeWidth="1.8"/>
-        <rect x="64" y="18" width="52" height="20" rx="5" fill="#f0f4f8" stroke="#dde1e7" strokeWidth="1.5"/>
-        <rect x="74" y="22" width="32" height="10" rx="3" fill="#c9d4df"/>
-        <rect x="50" y="60" width="76" height="6.5" rx="3.25" fill="#e2e8f0"/>
-        <rect x="50" y="76" width="58" height="6.5" rx="3.25" fill="#dbeafe"/>
-        <rect x="50" y="92" width="68" height="6.5" rx="3.25" fill="#e2e8f0"/>
-        <rect x="50" y="108" width="46" height="6.5" rx="3.25" fill="#dbeafe"/>
-        <rect x="50" y="124" width="62" height="6.5" rx="3.25" fill="#e2e8f0"/>
-        <rect x="50" y="60" width="9" height="6.5" rx="2" fill="#3b82f6"/>
-        <path d="M52.5 63l1.5 1.5 2.5-2.5" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-        <rect x="50" y="76" width="9" height="6.5" rx="2" fill="#3b82f6"/>
-        <path d="M52.5 79l1.5 1.5 2.5-2.5" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-        <rect x="50" y="92" width="9" height="6.5" rx="2" fill="#e2e8f0"/>
-        <rect x="50" y="108" width="9" height="6.5" rx="2" fill="#e2e8f0"/>
-        <rect x="50" y="124" width="9" height="6.5" rx="2" fill="#e2e8f0"/>
-        <circle cx="146" cy="84" r="13" fill="#c7d7fe" stroke="#a5b4fc" strokeWidth="1.5"/>
-        <path d="M135 79 Q146 69 157 79" fill="#818cf8"/>
-        <path d="M130 118 Q146 105 162 118 L163 142 H129 Z" fill="#e0e7ff" stroke="#a5b4fc" strokeWidth="1.5"/>
-        <line x1="130" y1="122" x2="119" y2="131" stroke="#a5b4fc" strokeWidth="1.8" strokeLinecap="round"/>
-        <circle cx="117" cy="133" r="4" fill="#c7d7fe" stroke="#a5b4fc" strokeWidth="1.5"/>
-        <ellipse cx="24" cy="152" rx="9" ry="16" fill="#bbf7d0" transform="rotate(-22 24 152)"/>
-        <ellipse cx="18" cy="148" rx="7" ry="12" fill="#6ee7b7" transform="rotate(-42 18 148)"/>
-        <ellipse cx="156" cy="148" rx="9" ry="16" fill="#bbf7d0" transform="rotate(22 156 148)"/>
-        <ellipse cx="162" cy="144" rx="7" ry="12" fill="#6ee7b7" transform="rotate(42 162 144)"/>
-      </svg>
-      <p className="text-sm text-gray-500 dark:text-gray-400 max-w-[240px] leading-relaxed">
-        Start your Company search, preview, and import companies for enrichment by applying any filter in the left panel.
-      </p>
-      <p className="text-xs text-gray-400 mt-2 font-medium">OR</p>
-      <p className="text-xs text-gray-400 mt-1">Import companies from saved Search.</p>
+    <div className="flex flex-col items-center justify-center px-6 select-none text-center">
+      <Image
+        src="/empty-state.svg"
+        alt="Empty State Illustration"
+        width={320}
+        height={220}
+        className="w-auto h-44 object-contain mb-5 mix-blend-multiply dark:mix-blend-normal"
+        priority
+      />
+      <div className="mt-5 flex flex-col items-center gap-1.5">
+        <p className="text-[13px] font-medium text-slate-400 dark:text-slate-500 max-w-[420px] leading-relaxed text-center">
+          Start your People search , preview, and import people<br/>for enrichment by applying any filter in the left panel.
+        </p>
+        <p className="text-[13px] font-medium text-slate-400 dark:text-slate-500 my-1">OR</p>
+        <p className="text-[13px] font-medium text-slate-400 dark:text-slate-500">Import people from saved Search.</p>
+      </div>
     </div>
   );
 }
@@ -164,21 +149,24 @@ export function FindPeopleModal() {
       {/* Modal card */}
       <div
         role="dialog" aria-modal="true" aria-label="Find People"
-        className="relative z-10 flex flex-col w-[90vw] max-w-[820px] h-[88vh] max-h-[680px] rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden mt-10 sm:mt-0"
+        className="relative z-10 flex flex-col w-[95vw] max-w-[1040px] h-[88vh] max-h-[760px] rounded-[16px] bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden mt-10 sm:mt-0"
       >
-        {/* ── Modal Header ── */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800 shrink-0">
-          <div className="flex items-center gap-3">
-            <h2 className="text-[16px] font-bold text-gray-900 dark:text-gray-100">Find People</h2>
-            <div className="relative">
+        {/* ── Full Height Split Layout ── */}
+        <div className="flex flex-col md:flex-row flex-1 min-h-0 h-full">
+
+          {/* LEFT PANEL */}
+          <div className="flex flex-col w-full md:w-[340px] shrink-0 bg-white dark:bg-gray-900 z-10">
+            {/* Left Panel Header */}
+            <div className="flex items-center justify-between px-6 py-5 shrink-0">
+              <h2 className="text-[20px] font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">Find People</h2>
               <button
                 onClick={() => setSavedOpen(v => !v)}
-                className="flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors"
+                className="flex items-center gap-1.5 rounded-md bg-gray-50 dark:bg-gray-800 px-3 py-1.5 text-[13px] font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors border border-transparent"
               >
-                <ChevronDown className="h-3 w-3" /> Saved Search
+                <ChevronDown className="h-4 w-4" /> Saved Search
               </button>
               {savedOpen && (
-                <div className="absolute left-0 top-full mt-1.5 w-48 rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-lg py-1.5 z-30">
+                <div className="absolute left-6 top-16 mt-1 w-48 rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-lg py-1.5 z-30">
                   <p className="px-3 py-2 text-xs text-gray-400 text-center">No saved searches yet</p>
                   <div className="border-t border-gray-100 dark:border-gray-800 mx-3 my-1" />
                   <button className="w-full text-left px-3 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors flex items-center gap-2">
@@ -188,105 +176,104 @@ export function FindPeopleModal() {
                 </div>
               )}
             </div>
-          </div>
-          <button
-            onClick={closeFindPeople}
-            className="flex h-7 w-7 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 cursor-pointer transition-colors"
-            aria-label="Close"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-
-        {/* ── Body (left + right) ── */}
-        <div className="flex flex-col md:flex-row flex-1 min-h-0">
-
-          {/* LEFT PANEL */}
-          <div className="flex flex-col w-full md:w-[300px] shrink-0 border-b md:border-b-0 md:border-r border-gray-100 dark:border-gray-800 h-[280px] md:h-auto">
 
             {/* People Keyword */}
-            <div className="px-5 pt-4 pb-3 shrink-0">
-              <div className="flex items-center gap-2 mb-3">
-                <Users className="h-4 w-4 text-gray-500 dark:text-gray-400 shrink-0" />
-                <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">People Keyword</span>
+            <div className="px-5 pt-5 shrink-0">
+              <div className="flex items-center gap-2.5 mb-4">
+                <Users className="h-5 w-5 text-gray-800 dark:text-gray-200 shrink-0" />
+                <span className="text-[14.5px] font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">People Keyword</span>
               </div>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400 pointer-events-none" />
+              <div className="flex items-center pb-4">
+                <Search className="h-3.5 w-3.5 text-gray-400 shrink-0 mr-2" />
                 <input
                   type="text" value={keyword} onChange={e => setKeyword(e.target.value)}
                   placeholder="Enter single keyword here..."
-                  className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-2 pl-9 pr-3 text-sm text-gray-800 dark:text-gray-100 placeholder:text-gray-400 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50 cursor-text transition-all"
+                  className="w-full bg-transparent text-[13px] text-gray-800 dark:text-gray-100 placeholder:text-gray-400 outline-none"
                 />
               </div>
             </div>
-
-            {/* Divider */}
-            <div className="h-px bg-gray-100 dark:bg-gray-800 mx-0" />
+            
+            <div className="h-px bg-gray-100 dark:bg-gray-800 mx-5" />
 
             {/* Filter sections */}
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               {filterSections.map(s => (
                 <FilterRow key={s.id} section={s} tags={filterTags[s.id]} onAdd={addTag} onRemove={removeTag} />
               ))}
             </div>
 
             {/* Bottom bar */}
-            <div className="border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 py-3 flex items-center gap-2 shrink-0">
-              <button className="h-9 flex-1 whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-transparent text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors px-2">
-                <BookmarkPlus className="h-3.5 w-3.5 text-gray-500 shrink-0" />
+            <div className="bg-white dark:bg-gray-900 px-4 py-3 flex items-center gap-2 shrink-0">
+              <button className="h-9 flex-1 whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-transparent text-[12px] font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors px-2">
+                <BookmarkPlus className="h-4 w-4 text-gray-500 shrink-0" />
                 Save Search
               </button>
-              <button className="h-9 flex-1 whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-lg bg-gray-900 dark:bg-white text-xs font-semibold text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 cursor-pointer transition-colors px-2">
-                <Eye className="h-3.5 w-3.5 shrink-0" />
+              <button className="h-9 flex-1 whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#1e293b] dark:bg-white text-[12px] font-bold text-white dark:text-gray-900 hover:bg-slate-800 dark:hover:bg-gray-100 cursor-pointer transition-colors px-2">
+                <Eye className="h-4 w-4 shrink-0" />
                 Preview Result
               </button>
             </div>
           </div>
 
           {/* RIGHT PANEL */}
-          <div className="flex flex-1 flex-col overflow-hidden bg-white dark:bg-gray-900 min-h-[300px] md:min-h-0">
+          <div className="flex flex-1 flex-col overflow-hidden bg-white dark:bg-gray-900 p-6 pt-5 min-h-[300px] md:min-h-0 relative">
+            
+            {/* Absolute Close button in top right */}
+            <button
+              onClick={closeFindPeople}
+              className="absolute top-4 right-4 flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-700 cursor-pointer transition-colors z-20"
+              aria-label="Close"
+            >
+              <X className="h-4 w-4" />
+            </button>
 
-            {/* Info bar — TWO rows matching screenshot */}
-            <div className="border-b border-gray-100 dark:border-gray-800 px-5 py-3 shrink-0 space-y-1">
-              {/* Row 1: found text + credit pill */}
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
-                  Found 0 companies. Click preview to view results
+            {/* Top Right Yellow Badge */}
+            <div className="flex justify-end mb-4 mr-6 shrink-0">
+              <div className="flex items-center gap-1.5 rounded-full bg-[#faeedd] dark:bg-amber-900/20 px-3 py-1.5 shrink-0 border border-[#f2ddc2] dark:border-amber-800/50">
+                <Search className="h-3 w-3 text-[#cc822b] shrink-0" />
+                <span className="text-[12px] font-semibold text-[#cc822b] whitespace-nowrap tabular-nums">
+                  8000/50000
+                </span>
+              </div>
+            </div>
+
+            {/* Info bar — SINGLE row matching screenshot */}
+            <div className="flex items-center justify-between gap-3 mb-4 shrink-0">
+              <p className="text-[13px] font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap">
+                Found 0 companies. Click preview to view results
+              </p>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <Unlock className="h-3.5 w-3.5 text-[#cc822b] shrink-0" />
+                <p className="text-[13px] font-medium text-[#cc822b] dark:text-[#d97706] whitespace-nowrap">
+                  Unlock <span className="font-bold">100,000 leads</span> with Enterprise Plan*
                 </p>
-                <div className="flex items-center gap-1.5 rounded-full border border-orange-200 dark:border-orange-700 bg-orange-50 dark:bg-orange-900/20 px-2.5 py-1 shrink-0">
-                  <Lock className="h-3 w-3 text-orange-500 shrink-0" />
-                  <span className="text-xs font-semibold text-orange-600 dark:text-orange-400 whitespace-nowrap tabular-nums">
-                    8000/50000
-                  </span>
+              </div>
+            </div>
+
+            {/* Main Content Box (Table Headers + Empty State) */}
+            <div className="flex flex-col border border-gray-100 dark:border-gray-800 rounded-lg overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.02)] mb-auto">
+              <div className="bg-[#f8fafc] dark:bg-gray-800/40 px-6 shrink-0">
+                <div className="flex items-center overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                  {[
+                    { label: "NAME",         w: 80 },
+                    { label: "TITLE",        w: 70  },
+                    { label: "HEADLINE",     w: 95 },
+                    { label: "LINKEDIN URL", w: 105 },
+                    { label: "COMPANY",      w: 80 },
+                    { label: "COMPANY URL",  w: 100 },
+                    { label: "COMP. LOC.", w: 120, flex1: true },
+                  ].map(({ label, w, flex1 }) => (
+                    <div key={label} style={{ minWidth: w }} className={`shrink-0 py-3.5 pr-4 text-[11px] font-bold text-gray-500 dark:text-gray-400 tracking-wide uppercase ${flex1 ? 'flex-1' : ''}`}>
+                      {label}
+                    </div>
+                  ))}
                 </div>
               </div>
-              {/* Row 2: unlock banner */}
-              <p className="text-xs text-orange-500 dark:text-orange-400">
-                🔒 Unlock <span className="font-bold text-orange-600 dark:text-orange-300">100,000 leads</span> with Enterprise Plan★
-              </p>
-            </div>
 
-            {/* Column headers */}
-            <div className="border-b border-gray-100 dark:border-gray-800 px-5 shrink-0">
-              <div className="flex items-center overflow-x-auto">
-                {[
-                  { label: "NAME",         w: 100 },
-                  { label: "TITLE",        w: 90  },
-                  { label: "HEADLINE",     w: 120 },
-                  { label: "LINKEDIN URL", w: 120 },
-                  { label: "COMPANY",      w: 100 },
-                  { label: "COMPANY URL",  w: 110 },
-                ].map(({ label, w }) => (
-                  <div key={label} style={{ minWidth: w }} className="shrink-0 py-2.5 pr-5 text-[10px] font-bold text-gray-400 dark:text-gray-500 tracking-widest uppercase">
-                    {label}
-                  </div>
-                ))}
+              {/* Empty state */}
+              <div className="flex flex-col items-center justify-center overflow-y-auto bg-white dark:bg-gray-900 pt-8 pb-14">
+                <EmptyState />
               </div>
-            </div>
-
-            {/* Empty state */}
-            <div className="flex flex-1 items-center justify-center overflow-y-auto">
-              <EmptyState />
             </div>
           </div>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import {
   Search,
@@ -11,6 +12,7 @@ import {
   Star,
   LayoutList,
   ChevronUp,
+  ChevronDown,
   ChevronRight,
   CheckCircle2,
   Circle,
@@ -19,6 +21,7 @@ import {
   Copy,
   Trash2,
   FolderSearch,
+  MoreHorizontal,
 } from "lucide-react";
 import { useModal } from "@/app/context/ModalContext";
 import { useGrids } from "@/app/context/GridContext";
@@ -53,19 +56,14 @@ function VideoCard() {
       {/* Content */}
       <div className="flex gap-3 p-4">
         {/* Video thumbnail */}
-        <div className="relative shrink-0 h-[70px] w-[110px] rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-700 dark:to-gray-800 overflow-hidden group cursor-pointer">
-          {/* Simulated screenshot lines */}
-          <div className="absolute inset-0 flex flex-col gap-0.5 p-1.5 opacity-30">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="h-1 rounded-full bg-white/60" style={{ width: `${70 + (i % 3) * 15}%` }} />
-            ))}
-          </div>
-          {/* Play button */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm border border-white/30 group-hover:bg-white/30 transition-all">
-              <Play className="h-3.5 w-3.5 text-white fill-white ml-0.5" />
-            </div>
-          </div>
+        <div className="relative shrink-0 h-[96px] w-[152px] flex items-center justify-center cursor-pointer group">
+          <Image
+            src="/CONTAINER.svg"
+            alt="Latest from Bitscale Video"
+            fill
+            className="object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-sm"
+            priority
+          />
         </div>
         {/* Text */}
         <div className="flex flex-col justify-between min-w-0">
@@ -100,7 +98,7 @@ function OnboardingCard() {
           <p className="text-[12px] text-gray-500 dark:text-gray-400 mt-0.5 leading-snug">
             92% of users nailed BitScale after this walkthrough
           </p>
-          
+
           {/* Progress bar */}
           <div className="flex items-center gap-3 mt-4">
             <div className="flex-1 h-[5px] bg-[#e2e8f0] dark:bg-gray-700 rounded-full overflow-hidden">
@@ -140,7 +138,7 @@ function OnboardingCard() {
 export default function DashboardPage() {
   const { openFindPeople, openFindCompanies, openNewGrid } = useModal();
   const { grids, toggleStar, deleteGrid } = useGrids();
-  
+
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"grids" | "starred">("grids");
   const [searchQuery, setSearchQuery] = useState("");
@@ -164,7 +162,7 @@ export default function DashboardPage() {
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50 tracking-tight">
-            Welcome back, Sambhav! 👋
+            Welcome back, Sambhav!
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             Here's your daily scoop on Bitscale!
@@ -217,7 +215,7 @@ export default function DashboardPage() {
       )}
 
       {/* ── Grids section ── */}
-      <div className="rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm overflow-hidden transition-colors">
+      <div>
         {/* Tabs + search + toggle */}
         <div className="flex items-center justify-between gap-3 px-5 py-3 border-b border-gray-100 dark:border-gray-800 flex-wrap">
           {/* Tabs */}
@@ -227,11 +225,10 @@ export default function DashboardPage() {
                 key={tab}
                 type="button"
                 onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 text-[13px] font-semibold capitalize cursor-pointer transition-colors border-b-2 -mb-px ${
-                  activeTab === tab
+                className={`px-4 py-2 text-[13px] font-semibold capitalize cursor-pointer transition-colors border-b-2 -mb-px ${activeTab === tab
                     ? "border-blue-600 dark:border-blue-500 text-blue-600 dark:text-blue-500"
                     : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-                }`}
+                  }`}
               >
                 {tab === "grids" ? "My Grids" : "Starred"}
               </button>
@@ -276,15 +273,21 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="overflow-x-auto animate-in fade-in duration-500">
-            <table className="w-full">
+            <table className="w-full table-fixed">
               {/* Column headers */}
+              <colgroup>
+                <col className="w-auto" />
+                <col style={{ width: "200px" }} />
+                <col style={{ width: "160px" }} />
+                <col style={{ width: "110px" }} />
+              </colgroup>
               <thead>
-                <tr className="border-b border-gray-100 dark:border-gray-800 bg-gray-50/40 dark:bg-gray-800/40">
-                  <th className="px-5 py-2.5 text-left">
+                <tr className="border-b border-gray-100 dark:border-gray-800">
+                  <th className="px-5 py-3 text-left">
                     <button
                       type="button"
                       onClick={() => setSortDir((d) => (d === "asc" ? "desc" : "asc"))}
-                      className="inline-flex items-center gap-1 text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer transition-colors"
+                      className="inline-flex items-center gap-1 text-[13px] font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer transition-colors"
                     >
                       Name
                       <ChevronUp
@@ -292,15 +295,16 @@ export default function DashboardPage() {
                       />
                     </button>
                   </th>
-                  <th className="px-4 py-2.5 text-left text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                  <th className="px-4 py-3 text-left text-[13px] font-medium text-gray-500 dark:text-gray-400">
                     Edited by
                   </th>
-                  <th className="px-4 py-2.5 text-left text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                  <th className="px-4 py-3 text-left text-[13px] font-medium text-gray-500 dark:text-gray-400">
                     Last edited
                   </th>
-                  <th className="px-5 py-2.5 w-[110px]" />
+                  <th className="px-5 py-3 text-right text-[13px] font-medium text-gray-500 dark:text-gray-400">Actions</th>
                 </tr>
               </thead>
+
 
               {/* Rows */}
               <tbody className="divide-y divide-gray-50 dark:divide-gray-800/50">
@@ -310,11 +314,15 @@ export default function DashboardPage() {
                     className="group hover:bg-gray-50/80 dark:hover:bg-gray-800/40 transition-colors cursor-pointer"
                   >
                     {/* Name */}
-                    <td className="px-5 py-3">
-                      <div className="flex items-center gap-3">
-                        {row.isWorkbook && (
-                          <ChevronRight className="h-4 w-4 text-gray-400 dark:text-gray-500 shrink-0 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" />
-                        )}
+                    <td className="px-5 py-3.5">
+                      <div className="flex items-center gap-2.5">
+                        {/* Chevron placeholder — always same width so stars align */}
+                        <div className="shrink-0 w-4 h-4 flex items-center justify-center">
+                          {row.isWorkbook && (
+                            <ChevronDown className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                          )}
+                        </div>
+
                         {/* Star */}
                         <button
                           type="button"
@@ -322,77 +330,60 @@ export default function DashboardPage() {
                             e.stopPropagation();
                             toggleStar(row.id);
                           }}
-                          className={`shrink-0 cursor-pointer transition-opacity ${
-                            row.starred ? "opacity-100" : "opacity-100 md:opacity-0 md:group-hover:opacity-100"
-                          }`}
+                          className="shrink-0 cursor-pointer"
                           aria-label="Toggle star"
                         >
                           <Star
-                            className={`h-3.5 w-3.5 transition-colors ${
-                              row.starred
+                            className={`h-3.5 w-3.5 transition-colors ${row.starred
                                 ? "fill-amber-400 text-amber-400"
                                 : "text-gray-300 dark:text-gray-600 hover:text-amber-400"
-                            }`}
+                              }`}
                           />
                         </button>
 
                         <GridIcon row={row} />
 
                         {/* Name text */}
-                        <span className="text-[13px] font-medium text-gray-900 dark:text-gray-100 truncate max-w-[260px]">
+                        <span className="text-[13px] font-medium text-gray-900 dark:text-gray-100 truncate max-w-[360px]">
                           {row.name}
                         </span>
                       </div>
                     </td>
 
+
                     {/* Edited by */}
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3.5">
                       <div className="flex items-center gap-2">
-                        <div
-                          className={`h-6 w-6 rounded-full ${row.editedBy.color} flex items-center justify-center text-[10px] font-bold text-white shrink-0`}
-                        >
-                          {row.editedBy.initials}
-                        </div>
-                        <span className="text-[12px] text-gray-600 dark:text-gray-400">{row.editedBy.name}</span>
+                        {row.editedBy.avatar ? (
+                          <img
+                            src={row.editedBy.avatar}
+                            alt={row.editedBy.name}
+                            className="h-6 w-6 rounded-full object-cover border border-gray-100 dark:border-gray-700 shrink-0"
+                          />
+                        ) : (
+                          <div className={`h-6 w-6 rounded-full ${row.editedBy.color} flex items-center justify-center text-[10px] font-bold text-white shrink-0`}>
+                            {row.editedBy.initials}
+                          </div>
+                        )}
+                        <span className="text-[13px] text-gray-700 dark:text-gray-300">{row.editedBy.name}</span>
                       </div>
                     </td>
 
                     {/* Last edited */}
-                    <td className="px-4 py-3">
-                      <span className="text-[12px] text-gray-500 dark:text-gray-400">{row.lastEdited}</span>
+                    <td className="px-4 py-3.5">
+                      <span className="text-[13px] text-gray-500 dark:text-gray-400">{row.lastEdited}</span>
                     </td>
 
                     {/* Actions */}
-                    <td className="px-4 py-3">
-                      <div className="flex items-center justify-end gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-x-0 md:translate-x-2 md:group-hover:translate-x-0 transition-all duration-150 relative">
-                        <button
-                          type="button"
-                          title="Edit"
-                          className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer transition-colors"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <Pencil className="h-3.5 w-3.5" />
-                        </button>
-                        <button
-                          type="button"
-                          title="Duplicate"
-                          className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer transition-colors"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <Copy className="h-3.5 w-3.5" />
-                        </button>
-                        <button
-                          type="button"
-                          title="Delete"
-                          className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-red-50 dark:hover:bg-red-950/40 hover:text-red-500 cursor-pointer transition-colors"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            deleteGrid(row.id);
-                          }}
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
-                      </div>
+                    <td className="px-5 py-3.5 text-right">
+                      <button
+                        type="button"
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center justify-center text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer transition-colors"
+                        aria-label="More actions"
+                      >
+                        <MoreHorizontal className="h-4 w-4" />
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -408,8 +399,8 @@ export default function DashboardPage() {
                   No grids found
                 </h3>
                 <p className="text-[13px] text-gray-500 dark:text-gray-400 max-w-sm">
-                  {searchQuery 
-                    ? `We couldn't find any grids matching "${searchQuery}". Try a different term or create a new grid.` 
+                  {searchQuery
+                    ? `We couldn't find any grids matching "${searchQuery}". Try a different term or create a new grid.`
                     : "You haven't created any grids yet. Create your first grid to get started!"}
                 </p>
                 {searchQuery && (
