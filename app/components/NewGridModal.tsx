@@ -4,6 +4,8 @@ import { useEffect, useRef, useState, KeyboardEvent } from "react";
 import { X, Grid3X3, Users, FileSpreadsheet } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useModal } from "@/app/context/ModalContext";
+import { useGrids } from "@/app/context/GridContext";
+import { useToast } from "@/app/context/ToastContext";
 
 // ─── Source types ─────────────────────────────────────────────────────────────
 
@@ -17,6 +19,8 @@ interface SourceType {
   border: string;
   selectedBorder: string;
   selectedBg: string;
+  gridIcon: string;
+  gridIconBg: string;
 }
 
 // Custom LinkedIn icon as SVG component
@@ -47,6 +51,8 @@ const sourceTypes: SourceType[] = [
     border: "border-gray-200 dark:border-gray-700",
     selectedBorder: "border-blue-500",
     selectedBg: "bg-blue-50 dark:bg-blue-950/60",
+    gridIcon: "LI",
+    gridIconBg: "bg-blue-600 dark:bg-blue-600",
   },
   {
     id: "salesnav",
@@ -58,6 +64,8 @@ const sourceTypes: SourceType[] = [
     border: "border-gray-200 dark:border-gray-700",
     selectedBorder: "border-orange-500",
     selectedBg: "bg-orange-50 dark:bg-orange-950/60",
+    gridIcon: "SN",
+    gridIconBg: "bg-violet-600 dark:bg-violet-600",
   },
   {
     id: "findpeople",
@@ -69,6 +77,8 @@ const sourceTypes: SourceType[] = [
     border: "border-gray-200 dark:border-gray-700",
     selectedBorder: "border-violet-500",
     selectedBg: "bg-violet-50 dark:bg-violet-950/60",
+    gridIcon: "FP",
+    gridIconBg: "bg-purple-500 dark:bg-purple-500",
   },
   {
     id: "importcsv",
@@ -80,6 +90,8 @@ const sourceTypes: SourceType[] = [
     border: "border-gray-200 dark:border-gray-700",
     selectedBorder: "border-gray-500",
     selectedBg: "bg-gray-100 dark:bg-gray-800/60",
+    gridIcon: "IC",
+    gridIconBg: "bg-gray-700 dark:bg-gray-600",
   },
 ];
 
@@ -87,6 +99,9 @@ const sourceTypes: SourceType[] = [
 
 export function NewGridModal() {
   const { newGridOpen, closeNewGrid } = useModal();
+  const { addGrid } = useGrids();
+  const { showToast } = useToast();
+
   const [gridName, setGridName] = useState("");
   const [selectedSource, setSelectedSource] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -116,16 +131,34 @@ export function NewGridModal() {
 
   const handleClose = () => {
     closeNewGrid();
-    setGridName("");
-    setSelectedSource(null);
+    setTimeout(() => {
+      setGridName("");
+      setSelectedSource(null);
+    }, 200); // Clear after animation finishes
   };
 
   const handleCreate = () => {
-    if (!gridName.trim()) {
+    if (!gridName.trim() || !selectedSource) {
       inputRef.current?.focus();
       return;
     }
-    // In a real app, this would POST to the API
+    
+    const sourceData = sourceTypes.find((s) => s.id === selectedSource)!;
+
+    addGrid({
+      id: Date.now(),
+      name: gridName.trim(),
+      icon: sourceData.gridIcon,
+      iconBg: sourceData.gridIconBg,
+      iconColor: "text-white",
+      starred: false,
+      editedBy: { name: "Sambhav Sharma", initials: "SS", color: "bg-blue-500" },
+      lastEdited: "Just now",
+      status: "draft",
+      rows: 0,
+    });
+
+    showToast("Grid created successfully! 🎉");
     handleClose();
   };
 

@@ -1,17 +1,4 @@
 import { Metadata } from "next";
-import {
-  ArrowUpRight,
-  Building2,
-  Users,
-  Zap,
-  TrendingUp,
-  Grid3X3,
-  Clock,
-  CheckCircle2,
-  CircleDashed,
-  BarChart3,
-} from "lucide-react";
-import { QuickActionsSection } from "@/app/components/QuickActionsSection";
 import { HomePageClient } from "@/app/components/HomePageClient";
 
 export const metadata: Metadata = {
@@ -54,44 +41,6 @@ export const stats = [
   },
 ];
 
-export const recentGrids = [
-  {
-    id: 1,
-    name: "Series B SaaS Companies — EU",
-    status: "completed",
-    rows: 842,
-    updatedAt: "2 hours ago",
-  },
-  {
-    id: 2,
-    name: "VP Engineering Outreach — SF Bay",
-    status: "running",
-    rows: 314,
-    updatedAt: "Running now",
-  },
-  {
-    id: 3,
-    name: "YC W24 Founders",
-    status: "completed",
-    rows: 127,
-    updatedAt: "Yesterday",
-  },
-  {
-    id: 4,
-    name: "Healthcare AI — Series A",
-    status: "draft",
-    rows: 0,
-    updatedAt: "3 days ago",
-  },
-  {
-    id: 5,
-    name: "Fintech CFOs — APAC",
-    status: "completed",
-    rows: 2103,
-    updatedAt: "4 days ago",
-  },
-];
-
 export default function HomePage() {
-  return <HomePageClient stats={stats} recentGrids={recentGrids} />;
+  return <HomePageClient stats={stats} />;
 }

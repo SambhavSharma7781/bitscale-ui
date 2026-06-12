@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import {
   Home,
   LayoutDashboard,
@@ -15,6 +15,7 @@ import {
   ChevronUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/app/context/ToastContext";
 
 // ─── Nav config ────────────────────────────────────────────────────────────────
 
@@ -34,31 +35,6 @@ const navItems: NavItem[] = [
   { label: "Settings", href: "/settings", icon: Settings, built: false },
 ];
 
-// ─── Tiny toast ───────────────────────────────────────────────────────────────
-
-interface ToastState {
-  id: number;
-  message: string;
-}
-
-function ToastContainer({ toasts }: { toasts: ToastState[] }) {
-  return (
-    <div
-      aria-live="polite"
-      className="fixed bottom-5 left-1/2 -translate-x-1/2 z-[200] flex flex-col items-center gap-2 pointer-events-none"
-    >
-      {toasts.map((t) => (
-        <div
-          key={t.id}
-          className="rounded-full bg-gray-900 dark:bg-gray-100 px-4 py-2 text-[13px] font-semibold text-white dark:text-gray-900 shadow-lg shadow-black/20 animate-in fade-in slide-in-from-bottom-2 duration-200"
-        >
-          {t.message}
-        </div>
-      ))}
-    </div>
-  );
-}
-
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
 
 interface SidebarProps {
@@ -69,15 +45,7 @@ interface SidebarProps {
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   const [bottomExpanded, setBottomExpanded] = useState(true);
-  const [toasts, setToasts] = useState<ToastState[]>([]);
-
-  const showToast = useCallback((message: string) => {
-    const id = Date.now();
-    setToasts((prev) => [...prev, { id, message }]);
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 2500);
-  }, []);
+  const { showToast } = useToast();
 
   const isActive = (item: NavItem) => {
     if (item.href === "/") return pathname === "/";
@@ -235,9 +203,6 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           </div>
         </div>
       </aside>
-
-      {/* Toast notifications */}
-      <ToastContainer toasts={toasts} />
     </>
   );
 }

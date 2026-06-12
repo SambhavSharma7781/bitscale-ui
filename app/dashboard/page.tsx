@@ -21,101 +21,9 @@ import {
   FolderSearch,
 } from "lucide-react";
 import { useModal } from "@/app/context/ModalContext";
+import { useGrids } from "@/app/context/GridContext";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
-
-const gridRows = [
-  {
-    id: 1,
-    name: "LinkedIn",
-    icon: "LI",
-    iconBg: "bg-blue-600",
-    iconColor: "text-white",
-    starred: false,
-    editedBy: { name: "Chris Parker", initials: "CP", color: "bg-emerald-500" },
-    lastEdited: "06 Aug, 2025",
-  },
-  {
-    id: 2,
-    name: "Sales nav",
-    icon: "SN",
-    iconBg: "bg-violet-600",
-    iconColor: "text-white",
-    starred: false,
-    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400" },
-    lastEdited: "06 Aug, 2025",
-  },
-  {
-    id: 3,
-    name: "find company",
-    icon: "FC",
-    iconBg: "bg-emerald-500",
-    iconColor: "text-white",
-    starred: false,
-    editedBy: { name: "Alex Morgan", initials: "AM", color: "bg-purple-500" },
-    lastEdited: "06 Aug, 2025",
-  },
-  {
-    id: 4,
-    name: "import csv",
-    icon: "IC",
-    iconBg: "bg-gray-700 dark:bg-gray-600",
-    iconColor: "text-white",
-    starred: false,
-    editedBy: { name: "Drew Wilson", initials: "DW", color: "bg-red-500" },
-    lastEdited: "06 Aug, 2025",
-  },
-  {
-    id: 5,
-    name: "Find people",
-    icon: "FP",
-    iconBg: "bg-blue-500",
-    iconColor: "text-white",
-    starred: false,
-    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400" },
-    lastEdited: "06 Aug, 2025",
-  },
-  {
-    id: 6,
-    name: "Google maps",
-    icon: "GM",
-    iconBg: "bg-green-500",
-    iconColor: "text-white",
-    starred: false,
-    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400" },
-    lastEdited: "06 Aug, 2025",
-  },
-  {
-    id: 7,
-    name: "google search results",
-    icon: "GS",
-    iconBg: "bg-blue-400",
-    iconColor: "text-white",
-    starred: false,
-    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400" },
-    lastEdited: "06 Aug, 2025",
-  },
-  {
-    id: 8,
-    name: "factors",
-    icon: "FA",
-    iconBg: "bg-rose-500",
-    iconColor: "text-white",
-    starred: false,
-    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400" },
-    lastEdited: "06 Aug, 2025",
-  },
-  {
-    id: 9,
-    name: "Hubspot List - 10 (05 Aug 25)",
-    icon: "HL",
-    iconBg: "bg-orange-500",
-    iconColor: "text-white",
-    starred: false,
-    editedBy: { name: "Jone Doe", initials: "JD", color: "bg-orange-400" },
-    lastEdited: "06 Aug, 2025",
-  },
-];
 
 const checklistItems = [
   { id: 1, label: "Create your data list", done: true },
@@ -227,12 +135,13 @@ function OnboardingCard() {
 
 export default function DashboardPage() {
   const { openFindPeople, openFindCompanies, openNewGrid } = useModal();
+  const { grids, toggleStar, deleteGrid } = useGrids();
+  
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"grids" | "starred">("grids");
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
-  const [starredIds, setStarredIds] = useState<Set<number>>(new Set());
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -240,18 +149,9 @@ export default function DashboardPage() {
     return () => clearTimeout(t);
   }, []);
 
-  const toggleStar = (id: number) => {
-    setStarredIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
-  const filteredRows = gridRows.filter((row) => {
+  const filteredRows = grids.filter((row) => {
     const matchesSearch = row.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesTab = activeTab === "grids" || starredIds.has(row.id);
+    const matchesTab = activeTab === "grids" || row.starred;
     return matchesSearch && matchesTab;
   });
 
@@ -433,7 +333,7 @@ export default function DashboardPage() {
                         >
                           <Star
                             className={`h-3.5 w-3.5 transition-colors ${
-                              starredIds.has(row.id)
+                              row.starred
                                 ? "fill-amber-400 text-amber-400"
                                 : "text-gray-300 dark:text-gray-600 hover:text-amber-400"
                             }`}
@@ -494,7 +394,10 @@ export default function DashboardPage() {
                           type="button"
                           title="Delete"
                           className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-red-50 dark:hover:bg-red-950/40 hover:text-red-500 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            deleteGrid(row.id);
+                          }}
                         >
                           <Trash2 className="h-3.5 w-3.5" />
                         </button>

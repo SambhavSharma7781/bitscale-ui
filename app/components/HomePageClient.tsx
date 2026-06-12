@@ -10,13 +10,13 @@ import {
   Clock,
   CheckCircle2,
   CircleDashed,
-  BarChart3,
   Pencil,
   Copy,
   Trash2,
 } from "lucide-react";
 import { AnimatedCounter } from "@/app/components/AnimatedCounter";
 import { QuickActionsSection } from "@/app/components/QuickActionsSection";
+import { useGrids } from "@/app/context/GridContext";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -27,14 +27,6 @@ interface Stat {
   change: string;
   icon: string;
   color: string;
-}
-
-interface Grid {
-  id: number;
-  name: string;
-  status: string;
-  rows: number;
-  updatedAt: string;
 }
 
 // ─── Icon map ─────────────────────────────────────────────────────────────────
@@ -70,13 +62,12 @@ const statusConfig = {
 
 // ─── HomePageClient ───────────────────────────────────────────────────────────
 
-export function HomePageClient({
-  stats,
-  recentGrids,
-}: {
-  stats: Stat[];
-  recentGrids: Grid[];
-}) {
+export function HomePageClient({ stats }: { stats: Stat[] }) {
+  const { grids, deleteGrid } = useGrids();
+  
+  // Show only top 5 grids for the "Recent Grids" table on the home page
+  const recentGrids = grids.slice(0, 5);
+
   return (
     <div className="p-6 md:p-8 space-y-8 max-w-7xl mx-auto">
       {/* Welcome header */}
@@ -96,25 +87,27 @@ export function HomePageClient({
       </div>
 
       {/* Animated stats grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
         {stats.map((stat) => {
           const Icon = iconMap[stat.icon];
           return (
             <div
               key={stat.label}
-              className="rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm hover:shadow-md hover:border-gray-200 dark:hover:border-gray-700 transition-all duration-200 group"
+              className="rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm hover:shadow-md hover:border-gray-200 dark:hover:border-gray-700 transition-all duration-200 group flex flex-col justify-between"
             >
-              <div className="flex items-start justify-between mb-3">
-                <div className={`h-9 w-9 rounded-lg flex items-center justify-center ${colorMap[stat.color]}`}>
-                  {Icon && <Icon className="h-[18px] w-[18px]" />}
+              <div>
+                <div className="flex items-start justify-between mb-3">
+                  <div className={`h-9 w-9 rounded-lg flex items-center justify-center ${colorMap[stat.color]}`}>
+                    {Icon && <Icon className="h-[18px] w-[18px]" />}
+                  </div>
+                  <ArrowUpRight className="h-4 w-4 text-gray-300 dark:text-gray-600 group-hover:text-gray-400 dark:group-hover:text-gray-500 transition-colors" />
                 </div>
-                <ArrowUpRight className="h-4 w-4 text-gray-300 dark:text-gray-600 group-hover:text-gray-400 dark:group-hover:text-gray-500 transition-colors" />
+                <p className="text-2xl font-bold text-gray-900 dark:text-gray-50 tabular-nums">
+                  <AnimatedCounter target={stat.value} formatter={(v) => v.toLocaleString()} />
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{stat.label}</p>
               </div>
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-50 tabular-nums">
-                <AnimatedCounter target={stat.value} formatter={(v) => v.toLocaleString()} />
-              </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{stat.label}</p>
-              <p className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400 mt-2">{stat.change}</p>
+              <p className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400 mt-3">{stat.change}</p>
             </div>
           );
         })}
@@ -138,7 +131,7 @@ export function HomePageClient({
 
         <div className="rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full text-sm min-w-[600px]">
               <thead>
                 <tr className="border-b border-gray-100 dark:border-gray-800 bg-gray-50/60 dark:bg-gray-800/40">
                   <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
@@ -153,77 +146,87 @@ export function HomePageClient({
                   <th className="text-right px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                     Updated
                   </th>
-                  {/* Actions column — invisible header */}
                   <th className="px-4 py-3 w-[110px]" />
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
-                {recentGrids.map((grid, idx) => {
-                  const status = statusConfig[grid.status as keyof typeof statusConfig];
-                  const StatusIcon = status.icon;
-                  return (
-                    <tr
-                      key={grid.id}
-                      className="hover:bg-gray-50/80 dark:hover:bg-gray-800/40 transition-colors group cursor-pointer"
-                    >
-                      <td className="px-5 py-3.5">
-                        <div className="flex items-center gap-2.5">
-                          <div className="h-7 w-7 rounded-md bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-[10px] font-bold text-gray-500 dark:text-gray-400 shrink-0">
-                            {String(idx + 1).padStart(2, "0")}
+                {recentGrids.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="py-8 text-center text-[13px] text-gray-500 dark:text-gray-400">
+                      No grids yet.
+                    </td>
+                  </tr>
+                ) : (
+                  recentGrids.map((grid, idx) => {
+                    const statusKey = grid.status as keyof typeof statusConfig;
+                    const status = statusConfig[statusKey] || statusConfig.completed;
+                    const StatusIcon = status.icon;
+                    return (
+                      <tr
+                        key={grid.id}
+                        className="hover:bg-gray-50/80 dark:hover:bg-gray-800/40 transition-colors group cursor-pointer"
+                      >
+                        <td className="px-5 py-3.5">
+                          <div className="flex items-center gap-2.5">
+                            <div className={`h-7 w-7 rounded-md ${grid.iconBg} flex items-center justify-center text-[10px] font-bold ${grid.iconColor} shrink-0`}>
+                              {grid.icon}
+                            </div>
+                            <span className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors text-[13px] truncate max-w-[180px] sm:max-w-xs">
+                              {grid.name}
+                            </span>
                           </div>
-                          <span className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors text-[13px] truncate max-w-[200px] sm:max-w-xs">
-                            {grid.name}
+                        </td>
+                        <td className="px-4 py-3.5">
+                          <span
+                            className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold ${status.class}`}
+                          >
+                            <StatusIcon className="h-3 w-3" />
+                            {status.label}
                           </span>
-                        </div>
-                      </td>
-                      <td className="px-4 py-3.5">
-                        <span
-                          className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold ${status.class}`}
-                        >
-                          <StatusIcon className="h-3 w-3" />
-                          {status.label}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3.5 text-right">
-                        <span className="text-[13px] font-semibold text-gray-700 dark:text-gray-300 tabular-nums">
-                          {grid.rows > 0 ? grid.rows.toLocaleString() : "—"}
-                        </span>
-                      </td>
-                      <td className="px-5 py-3.5 text-right">
-                        <span className="text-[12px] text-gray-400 dark:text-gray-500">{grid.updatedAt}</span>
-                      </td>
-                      {/* Row hover actions */}
-                      <td className="px-4 py-3.5">
-                        <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-150">
-                          <button
-                            type="button"
-                            title="Edit"
-                            className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <Pencil className="h-3.5 w-3.5" />
-                          </button>
-                          <button
-                            type="button"
-                            title="Duplicate"
-                            className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <Copy className="h-3.5 w-3.5" />
-                          </button>
-                          <button
-                            type="button"
-                            title="Delete"
-                            className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-red-50 dark:hover:bg-red-950/40 hover:text-red-500 transition-colors"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
+                        </td>
+                        <td className="px-4 py-3.5 text-right">
+                          <span className="text-[13px] font-semibold text-gray-700 dark:text-gray-300 tabular-nums">
+                            {grid.rows > 0 ? grid.rows.toLocaleString() : "—"}
+                          </span>
+                        </td>
+                        <td className="px-5 py-3.5 text-right">
+                          <span className="text-[12px] text-gray-400 dark:text-gray-500">{grid.lastEdited}</span>
+                        </td>
+                        <td className="px-4 py-3.5">
+                          <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-150">
+                            <button
+                              type="button"
+                              title="Edit"
+                              className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Pencil className="h-3.5 w-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              title="Duplicate"
+                              className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Copy className="h-3.5 w-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              title="Delete"
+                              className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-red-50 dark:hover:bg-red-950/40 hover:text-red-500 transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                deleteGrid(grid.id);
+                              }}
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </table>
           </div>
