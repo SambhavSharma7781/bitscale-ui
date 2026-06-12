@@ -1,65 +1,325 @@
-import Image from "next/image";
+import { Metadata } from "next";
+import {
+  ArrowUpRight,
+  Building2,
+  Users,
+  Zap,
+  TrendingUp,
+  Grid3X3,
+  Clock,
+  CheckCircle2,
+  CircleDashed,
+  BarChart3,
+  ChevronRight,
+} from "lucide-react";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Home — Bitscale Clone",
+  description: "Your Bitscale dashboard home. View recent grids, metrics, and activity.",
+};
+
+const stats = [
+  {
+    label: "Total Grids",
+    value: "24",
+    change: "+3 this week",
+    trend: "up",
+    icon: Grid3X3,
+    color: "blue",
+  },
+  {
+    label: "Companies Found",
+    value: "12,847",
+    change: "+1,204 today",
+    trend: "up",
+    icon: Building2,
+    color: "violet",
+  },
+  {
+    label: "People Enriched",
+    value: "8,391",
+    change: "+489 today",
+    trend: "up",
+    icon: Users,
+    color: "emerald",
+  },
+  {
+    label: "Automations Run",
+    value: "156",
+    change: "Last 30 days",
+    trend: "neutral",
+    icon: Zap,
+    color: "amber",
+  },
+];
+
+const recentGrids = [
+  {
+    id: 1,
+    name: "Series B SaaS Companies — EU",
+    status: "completed",
+    rows: 842,
+    updatedAt: "2 hours ago",
+  },
+  {
+    id: 2,
+    name: "VP Engineering Outreach — SF Bay",
+    status: "running",
+    rows: 314,
+    updatedAt: "Running now",
+  },
+  {
+    id: 3,
+    name: "YC W24 Founders",
+    status: "completed",
+    rows: 127,
+    updatedAt: "Yesterday",
+  },
+  {
+    id: 4,
+    name: "Healthcare AI — Series A",
+    status: "draft",
+    rows: 0,
+    updatedAt: "3 days ago",
+  },
+  {
+    id: 5,
+    name: "Fintech CFOs — APAC",
+    status: "completed",
+    rows: 2103,
+    updatedAt: "4 days ago",
+  },
+];
+
+const quickActions = [
+  {
+    title: "Find Companies",
+    description: "Search and filter from 50M+ companies",
+    icon: Building2,
+    href: "/companies",
+    gradient: "from-blue-500 to-blue-600",
+  },
+  {
+    title: "Find People",
+    description: "Discover contacts with rich enrichment",
+    icon: Users,
+    href: "/people",
+    gradient: "from-violet-500 to-violet-600",
+  },
+  {
+    title: "Run Playbook",
+    description: "Automate your GTM workflows",
+    icon: Zap,
+    href: "/playbooks",
+    gradient: "from-emerald-500 to-emerald-600",
+  },
+  {
+    title: "View Analytics",
+    description: "Credits usage and performance",
+    icon: BarChart3,
+    href: "/analytics",
+    gradient: "from-amber-500 to-orange-500",
+  },
+];
+
+const statusConfig = {
+  completed: {
+    label: "Completed",
+    icon: CheckCircle2,
+    class: "text-emerald-600 bg-emerald-50",
+  },
+  running: {
+    label: "Running",
+    icon: TrendingUp,
+    class: "text-blue-600 bg-blue-50",
+  },
+  draft: {
+    label: "Draft",
+    icon: CircleDashed,
+    class: "text-gray-500 bg-gray-100",
+  },
+};
+
+const colorMap: Record<string, string> = {
+  blue: "bg-blue-50 text-blue-600",
+  violet: "bg-violet-50 text-violet-600",
+  emerald: "bg-emerald-50 text-emerald-600",
+  amber: "bg-amber-50 text-amber-600",
+};
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="p-6 md:p-8 space-y-8 max-w-7xl mx-auto">
+      {/* Welcome header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+            Good morning, Sambhav 👋
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-sm text-gray-500 mt-0.5">
+            Here's what's happening with your workspace today.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+        <div className="flex items-center gap-2 text-xs text-gray-400 bg-white border border-gray-200 rounded-lg px-3 py-2">
+          <Clock className="h-3.5 w-3.5" />
+          <span>Last synced 2 minutes ago</span>
+        </div>
+      </div>
+
+      {/* Stats grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        {stats.map((stat) => {
+          const Icon = stat.icon;
+          return (
+            <div
+              key={stat.label}
+              className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm hover:shadow-md hover:border-gray-200 transition-all duration-200 group"
+            >
+              <div className="flex items-start justify-between mb-3">
+                <div className={`h-9 w-9 rounded-lg flex items-center justify-center ${colorMap[stat.color]}`}>
+                  <Icon className="h-4.5 w-4.5 h-[18px] w-[18px]" />
+                </div>
+                <ArrowUpRight className="h-4 w-4 text-gray-300 group-hover:text-gray-400 transition-colors" />
+              </div>
+              <p className="text-2xl font-bold text-gray-900 tabular-nums">{stat.value}</p>
+              <p className="text-xs text-gray-500 mt-0.5">{stat.label}</p>
+              <p className="text-[11px] font-medium text-emerald-600 mt-2">{stat.change}</p>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Quick actions */}
+      <div>
+        <h2 className="text-sm font-semibold text-gray-700 mb-3">Quick Actions</h2>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {quickActions.map((action) => {
+            const Icon = action.icon;
+            return (
+              <a
+                key={action.title}
+                href={action.href}
+                className="group relative overflow-hidden rounded-xl border border-gray-100 bg-white p-4 shadow-sm hover:shadow-md hover:border-gray-200 transition-all duration-200 flex flex-col gap-3"
+              >
+                <div
+                  className={`h-9 w-9 rounded-lg bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-sm`}
+                >
+                  <Icon className="h-4 w-4 text-white" />
+                </div>
+                <div>
+                  <p className="text-[13px] font-semibold text-gray-900 group-hover:text-gray-800">
+                    {action.title}
+                  </p>
+                  <p className="text-[11px] text-gray-500 mt-0.5 leading-snug">
+                    {action.description}
+                  </p>
+                </div>
+                <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-300 group-hover:text-gray-400 group-hover:translate-x-0.5 transition-all" />
+              </a>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Recent grids */}
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-sm font-semibold text-gray-700">Recent Grids</h2>
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/dashboard"
+            className="text-xs font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+            View all
+            <ArrowUpRight className="h-3 w-3" />
           </a>
         </div>
-      </main>
+
+        <div className="rounded-xl border border-gray-100 bg-white shadow-sm overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-100 bg-gray-50/60">
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                    Grid Name
+                  </th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                    Status
+                  </th>
+                  <th className="text-right px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                    Rows
+                  </th>
+                  <th className="text-right px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                    Updated
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {recentGrids.map((grid, idx) => {
+                  const status = statusConfig[grid.status as keyof typeof statusConfig];
+                  const StatusIcon = status.icon;
+                  return (
+                    <tr
+                      key={grid.id}
+                      className="hover:bg-gray-50/80 transition-colors group cursor-pointer"
+                    >
+                      <td className="px-5 py-3.5">
+                        <div className="flex items-center gap-2.5">
+                          <div className="h-7 w-7 rounded-md bg-gray-100 flex items-center justify-center text-[10px] font-bold text-gray-500 shrink-0">
+                            {String(idx + 1).padStart(2, "0")}
+                          </div>
+                          <span className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors text-[13px] truncate max-w-[200px] sm:max-w-xs">
+                            {grid.name}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3.5">
+                        <span
+                          className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold ${status.class}`}
+                        >
+                          <StatusIcon className="h-3 w-3" />
+                          {status.label}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3.5 text-right">
+                        <span className="text-[13px] font-semibold text-gray-700 tabular-nums">
+                          {grid.rows > 0 ? grid.rows.toLocaleString() : "—"}
+                        </span>
+                      </td>
+                      <td className="px-5 py-3.5 text-right">
+                        <span className="text-[12px] text-gray-400">{grid.updatedAt}</span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      {/* Credits usage card */}
+      <div className="rounded-xl border border-blue-100 bg-gradient-to-r from-blue-50 to-violet-50 p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+        <div className="flex-1">
+          <h3 className="text-sm font-semibold text-gray-900">Credit Usage</h3>
+          <p className="text-xs text-gray-500 mt-0.5">
+            450,000 of 5,500,000 credits used this billing cycle
+          </p>
+          <div className="mt-3 h-2 w-full rounded-full bg-white/70 border border-blue-100 overflow-hidden">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-blue-500 to-violet-500 transition-all duration-500"
+              style={{ width: "8.18%" }}
+            />
+          </div>
+          <p className="text-[11px] text-gray-400 mt-1.5">8% used · Resets in 22 days</p>
+        </div>
+        <a
+          href="/billing"
+          className="shrink-0 inline-flex items-center gap-2 rounded-lg bg-white border border-gray-200 px-4 py-2 text-[13px] font-semibold text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-300 transition-all"
+        >
+          Manage Plan
+          <ArrowUpRight className="h-3.5 w-3.5" />
+        </a>
+      </div>
     </div>
   );
 }
