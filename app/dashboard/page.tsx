@@ -9,9 +9,7 @@ import {
   Building2,
   Users,
   Star,
-  MoreHorizontal,
   LayoutList,
-  LayoutGrid,
   ChevronUp,
   ChevronRight,
   CheckCircle2,
@@ -148,7 +146,6 @@ export default function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
-  const [openMenuId, setOpenMenuId] = useState<number | null>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 800);
@@ -311,7 +308,6 @@ export default function DashboardPage() {
                   <tr
                     key={row.id}
                     className="group hover:bg-gray-50/80 dark:hover:bg-gray-800/40 transition-colors cursor-pointer"
-                    onClick={() => setOpenMenuId(null)}
                   >
                     {/* Name */}
                     <td className="px-5 py-3">
@@ -327,7 +323,7 @@ export default function DashboardPage() {
                             toggleStar(row.id);
                           }}
                           className={`shrink-0 cursor-pointer transition-opacity ${
-                            row.starred ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                            row.starred ? "opacity-100" : "opacity-100 md:opacity-0 md:group-hover:opacity-100"
                           }`}
                           aria-label="Toggle star"
                         >
@@ -368,7 +364,7 @@ export default function DashboardPage() {
 
                     {/* Actions */}
                     <td className="px-4 py-3">
-                      <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-150 relative">
+                      <div className="flex items-center justify-end gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-x-0 md:translate-x-2 md:group-hover:translate-x-0 transition-all duration-150 relative">
                         <button
                           type="button"
                           title="Edit"

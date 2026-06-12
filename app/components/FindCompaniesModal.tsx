@@ -198,10 +198,10 @@ export function FindCompaniesModal() {
         </div>
 
         {/* ── Body ── */}
-        <div className="flex flex-1 min-h-0">
+        <div className="flex flex-col md:flex-row flex-1 min-h-0">
 
           {/* LEFT PANEL */}
-          <div className="flex flex-col w-[300px] shrink-0 border-r border-gray-100 dark:border-gray-800">
+          <div className="flex flex-col w-full md:w-[300px] shrink-0 border-b md:border-b-0 md:border-r border-gray-100 dark:border-gray-800 h-[280px] md:h-auto">
 
             {/* Company Keyword */}
             <div className="px-5 pt-4 pb-3 shrink-0">
@@ -243,7 +243,7 @@ export function FindCompaniesModal() {
           </div>
 
           {/* RIGHT PANEL */}
-          <div className="flex flex-1 flex-col overflow-hidden bg-white dark:bg-gray-900">
+          <div className="flex flex-1 flex-col overflow-hidden bg-white dark:bg-gray-900 min-h-[300px] md:min-h-0">
 
             {/* Info bar — TWO rows */}
             <div className="border-b border-gray-100 dark:border-gray-800 px-5 py-3 shrink-0 space-y-1">

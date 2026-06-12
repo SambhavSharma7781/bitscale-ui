@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
-import { LayoutShell } from "./components/LayoutShell";
-import { TooltipProvider } from "@/components/ui/tooltip";
-
+import { LayoutShell } from "@/app/components/LayoutShell";
 export const metadata: Metadata = {
   title: "Bitscale Clone — Dashboard",
   description:
@@ -33,9 +31,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <TooltipProvider delayDuration={300}>
-            <LayoutShell>{children}</LayoutShell>
-          </TooltipProvider>
+          <LayoutShell>{children}</LayoutShell>
         </ThemeProvider>
       </body>
     </html>

@@ -106,6 +106,14 @@ export function NewGridModal() {
   const [selectedSource, setSelectedSource] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const handleClose = () => {
+    closeNewGrid();
+    setTimeout(() => {
+      setGridName("");
+      setSelectedSource(null);
+    }, 200); // Clear after animation finishes
+  };
+
   // Focus input when opened
   useEffect(() => {
     if (newGridOpen) {
@@ -128,14 +136,6 @@ export function NewGridModal() {
     document.body.style.overflow = newGridOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [newGridOpen]);
-
-  const handleClose = () => {
-    closeNewGrid();
-    setTimeout(() => {
-      setGridName("");
-      setSelectedSource(null);
-    }, 200); // Clear after animation finishes
-  };
 
   const handleCreate = () => {
     if (!gridName.trim() || !selectedSource) {

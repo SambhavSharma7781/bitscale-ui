@@ -159,7 +159,7 @@ export function HomePageClient({ stats }: { stats: Stat[] }) {
                     </td>
                   </tr>
                 ) : (
-                  recentGrids.map((grid, idx) => {
+                  recentGrids.map((grid) => {
                     const statusKey = grid.status as keyof typeof statusConfig;
                     const status = statusConfig[statusKey] || statusConfig.completed;
                     const StatusIcon = status.icon;
@@ -196,7 +196,7 @@ export function HomePageClient({ stats }: { stats: Stat[] }) {
                           <span className="text-[12px] text-gray-400 dark:text-gray-500">{grid.lastEdited}</span>
                         </td>
                         <td className="px-4 py-3.5">
-                          <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-150">
+                          <div className="flex items-center justify-end gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-x-0 md:translate-x-2 md:group-hover:translate-x-0 transition-all duration-150">
                             <button
                               type="button"
                               title="Edit"

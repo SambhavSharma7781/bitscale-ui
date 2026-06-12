@@ -5,9 +5,9 @@ import { useTheme } from "next-themes";
 import {
   Menu, Bell, ChevronDown, Moon, Sun, Coins
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/app/context/ToastContext";
 
 interface TopBarProps {
   onMenuClick: () => void;
@@ -16,10 +16,10 @@ interface TopBarProps {
 export function TopBar({ onMenuClick }: TopBarProps) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
+  const { showToast } = useToast();
 
   const creditsUsed = 450000;
   const creditsTotal = 5500000;
-  const creditPercent = Math.round((creditsUsed / creditsTotal) * 100);
 
   const formatCredits = (n: number) =>
     n >= 1_000_000
@@ -109,21 +109,31 @@ export function TopBar({ onMenuClick }: TopBarProps) {
                 <p className="text-[11px] text-gray-500 dark:text-gray-400 truncate">sambhav@bitscale.ai</p>
               </div>
               {[
-                { label: "Profile settings", href: "/settings" },
-                { label: "Billing & plans", href: "/billing" },
-                { label: "Team management", href: "/team" },
+                { label: "Profile settings" },
+                { label: "Billing & plans" },
+                { label: "Team management" },
               ].map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsProfileOpen(false)}
-                  className="block px-3 py-2 text-[13px] text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 cursor-pointer transition-colors"
+                <button
+                  key={item.label}
+                  type="button"
+                  onClick={() => {
+                    setIsProfileOpen(false);
+                    showToast("Coming Soon 🚀");
+                  }}
+                  className="w-full text-left block px-3 py-2 text-[13px] text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 cursor-pointer transition-colors"
                 >
                   {item.label}
-                </a>
+                </button>
               ))}
               <div className="border-t border-gray-100 dark:border-gray-800 mt-1 pt-1">
-                <button className="w-full text-left px-3 py-2 text-[13px] text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 cursor-pointer transition-colors">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsProfileOpen(false);
+                    showToast("Sign out coming soon 🚀");
+                  }}
+                  className="w-full text-left px-3 py-2 text-[13px] text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 cursor-pointer transition-colors"
+                >
                   Sign out
                 </button>
               </div>

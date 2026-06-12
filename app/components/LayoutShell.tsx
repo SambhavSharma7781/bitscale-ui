@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Sidebar } from "./Sidebar";
-import { TopBar } from "./TopBar";
-import { FindPeopleModal } from "./FindPeopleModal";
-import { FindCompaniesModal } from "./FindCompaniesModal";
-import { NewGridModal } from "./NewGridModal";
+import { Sidebar } from "@/app/components/Sidebar";
+import { TopBar } from "@/app/components/TopBar";
+import { FindPeopleModal } from "@/app/components/FindPeopleModal";
+import { FindCompaniesModal } from "@/app/components/FindCompaniesModal";
+import { NewGridModal } from "@/app/components/NewGridModal";
 import { ModalProvider } from "@/app/context/ModalContext";
 import { GridProvider } from "@/app/context/GridContext";
 import { ToastProvider } from "@/app/context/ToastContext";
