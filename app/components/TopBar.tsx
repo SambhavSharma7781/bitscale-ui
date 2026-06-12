@@ -1,16 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import {
-  Menu, Bell, ChevronDown, Plus, Users, Building2, Moon, Sun,
+  Menu, Bell, ChevronDown, Moon, Sun,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
-import { useModal } from "@/app/context/ModalContext";
 
 interface TopBarProps {
   onMenuClick: () => void;
@@ -18,12 +15,7 @@ interface TopBarProps {
 
 export function TopBar({ onMenuClick }: TopBarProps) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const { openFindPeople, openFindCompanies, openNewGrid } = useModal();
   const { resolvedTheme, setTheme } = useTheme();
-  const pathname = usePathname();
-
-  const isDashboard = pathname === "/dashboard";
-  const breadcrumb = isDashboard ? "dashboard" : (pathname === "/" ? "home" : pathname.replace("/", ""));
 
   const creditsUsed = 450000;
   const creditsTotal = 5500000;
@@ -42,8 +34,8 @@ export function TopBar({ onMenuClick }: TopBarProps) {
 
   return (
     <header className="sticky top-0 z-10 flex h-16 w-full items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 md:px-6">
-      {/* Left — hamburger + page title */}
-      <div className="flex items-center gap-3">
+      {/* Left side is completely empty except for mobile menu button */}
+      <div className="flex items-center">
         <button
           onClick={onMenuClick}
           className="flex h-8 w-8 items-center justify-center rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-200 transition-colors lg:hidden"
@@ -51,9 +43,6 @@ export function TopBar({ onMenuClick }: TopBarProps) {
         >
           <Menu className="h-5 w-5" />
         </button>
-        <h1 className="text-[12px] font-medium text-gray-500 dark:text-gray-400 tracking-tight hidden sm:block lowercase">
-          {breadcrumb}
-        </h1>
       </div>
 
       {/* Right — credits, badge, actions, avatar */}
@@ -87,41 +76,6 @@ export function TopBar({ onMenuClick }: TopBarProps) {
 
         {/* Divider */}
         <div className="hidden md:block h-6 w-px bg-gray-200 dark:bg-gray-700" />
-
-        {/* Find Companies */}
-        <Button
-          id="topbar-find-companies-btn"
-          variant="outline"
-          size="sm"
-          onClick={openFindCompanies}
-          className="hidden md:inline-flex items-center gap-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-[13px] font-medium shadow-none hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all h-8 px-3 rounded-lg"
-        >
-          <Building2 className="h-3.5 w-3.5 text-gray-500 dark:text-gray-400" />
-          Find Companies
-        </Button>
-
-        {/* Find People */}
-        <Button
-          id="topbar-find-people-btn"
-          variant="outline"
-          size="sm"
-          onClick={openFindPeople}
-          className="hidden md:inline-flex items-center gap-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-[13px] font-medium shadow-none hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all h-8 px-3 rounded-lg"
-        >
-          <Users className="h-3.5 w-3.5 text-gray-500 dark:text-gray-400" />
-          Find People
-        </Button>
-
-        {/* + New Grid */}
-        <Button
-          id="topbar-new-grid-btn"
-          size="sm"
-          onClick={openNewGrid}
-          className="inline-flex items-center gap-1.5 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-[13px] font-semibold hover:bg-gray-800 dark:hover:bg-white active:bg-gray-950 transition-all h-8 px-3 rounded-lg shadow-sm"
-        >
-          <Plus className="h-3.5 w-3.5" />
-          <span className="hidden sm:inline">New Grid</span>
-        </Button>
 
         {/* Dark mode toggle */}
         <button

@@ -11,9 +11,7 @@ import {
   Settings,
   ChevronDown,
   ChevronUp,
-  ChevronRight,
   X,
-  Search,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/app/context/ToastContext";
@@ -139,8 +137,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         )}
       >
         {/* ── Logo & Workspace Header ── */}
-        <div className="flex flex-col border-b border-gray-200 dark:border-gray-800">
-          <div className="flex items-center justify-between px-5 h-16 shrink-0">
+        <div className="flex flex-col">
+          <div className="flex items-center justify-between px-5 h-16 shrink-0 border-b border-gray-200 dark:border-gray-800">
             <span className="text-[22px] font-bold italic tracking-tight text-gray-900 dark:text-white">
               Bitscale
             </span>
@@ -152,7 +150,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             </button>
           </div>
 
-          <div className="px-3 pb-3">
+          <div className="p-3 border-b border-gray-200 dark:border-gray-800">
             <button className="flex w-full items-center justify-between rounded-lg px-2 py-2 hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors group">
               <div className="flex items-center gap-2.5">
                 <div className="h-6 w-6 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center text-[10px] font-bold">
@@ -192,7 +190,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
         {/* ── Bottom Card Section ── */}
         <div className="mt-auto">
-          <div className="mx-2 mb-2 p-3 rounded-xl bg-gray-100 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 flex items-center justify-between shadow-sm cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
+          <div className="mx-2 mb-2 p-3 rounded-xl bg-gray-100 dark:bg-gray-800/80 flex items-center justify-between shadow-sm cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
             <div className="flex flex-col text-left">
               <span className="text-[14px] font-bold italic text-gray-900 dark:text-gray-100 leading-tight">
                 Bitscale
