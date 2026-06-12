@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import {
   Home,
   LayoutDashboard,
@@ -15,7 +14,6 @@ import {
   ChevronRight,
   X,
   Search,
-  SearchCode,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/app/context/ToastContext";
@@ -27,6 +25,7 @@ interface NavItem {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   built: boolean;
+  badge?: string;
 }
 
 const navItemsHome: NavItem[] = [
@@ -35,7 +34,7 @@ const navItemsHome: NavItem[] = [
 ];
 
 const navItemsPlaybooks: NavItem[] = [
-  { label: "Playbooks", href: "/playbooks", icon: BookOpen, built: false },
+  { label: "Playbooks", href: "/playbooks", icon: BookOpen, built: false, badge: "🚀" },
   { label: "Integrations", href: "/integrations", icon: Plug, built: false },
 ];
 
@@ -84,6 +83,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               <Icon className="h-4 w-4" />
             </span>
             <span className="truncate text-left">{item.label}</span>
+            {item.badge && <span className="ml-auto text-[14px] leading-none">{item.badge}</span>}
           </button>
         );
       }
@@ -114,6 +114,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             <Icon className="h-4 w-4" />
           </span>
           <span className="truncate">{item.label}</span>
+          {item.badge && <span className="ml-auto text-[14px] leading-none">{item.badge}</span>}
         </Link>
       );
     });
@@ -137,58 +138,52 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
       >
-        {/* ── Logo Header (matches topbar height: 60px) ── */}
-        <div className="flex items-center justify-between px-5 h-[60px] shrink-0 border-b border-gray-200 dark:border-gray-800">
-          <div className="flex items-center gap-2">
-            {/* Real Bitscale Wordmark Logo */}
-            <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+        {/* ── Logo & Workspace Header ── */}
+        <div className="flex flex-col border-b border-gray-200 dark:border-gray-800">
+          <div className="flex items-center justify-between px-5 h-16 shrink-0">
+            <span className="text-[22px] font-bold italic tracking-tight text-gray-900 dark:text-white">
               Bitscale
             </span>
+            <button
+              onClick={onClose}
+              className="flex h-7 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 transition-colors lg:hidden"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="flex h-7 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 transition-colors lg:hidden"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
 
-        {/* ── Workspace Switcher ── */}
-        <div className="px-3 pt-3 pb-2">
-          <button className="flex w-full items-center justify-between rounded-lg px-2 py-2 hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors group">
-            <div className="flex items-center gap-2.5">
-              <div className="h-6 w-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] font-bold">
-                B
+          <div className="px-3 pb-3">
+            <button className="flex w-full items-center justify-between rounded-lg px-2 py-2 hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors group">
+              <div className="flex items-center gap-2.5">
+                <div className="h-6 w-6 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center text-[10px] font-bold">
+                  GT
+                </div>
+                <span className="text-[13px] font-semibold text-gray-900 dark:text-gray-100">
+                  GTM Spaces
+                </span>
               </div>
-              <span className="text-[13px] font-semibold text-gray-900 dark:text-gray-100">
-                GTM Spaces
-              </span>
-            </div>
-            <div className="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300">
-              <ChevronUp className="h-2.5 w-2.5 -mb-1" />
-              <ChevronDown className="h-2.5 w-2.5" />
-            </div>
-          </button>
+              <div className="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300">
+                <ChevronUp className="h-2.5 w-2.5 -mb-1" />
+                <ChevronDown className="h-2.5 w-2.5" />
+              </div>
+            </button>
+          </div>
         </div>
 
         {/* ── Navigation ── */}
-        <nav className="flex-1 overflow-y-auto px-3 py-2 space-y-4">
+        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
           {/* Home Section */}
           <div className="space-y-0.5">
-            <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+            <p className="px-3 mb-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
               Home
             </p>
             {renderNavList(navItemsHome)}
-          </div>
-
-          {/* Playbooks & Integrations */}
-          <div className="space-y-0.5">
             {renderNavList(navItemsPlaybooks)}
           </div>
 
           {/* Other Section */}
           <div className="space-y-0.5">
-            <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+            <p className="px-3 mb-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
               Other
             </p>
             {renderNavList(navItemsOther)}
@@ -196,24 +191,23 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         </nav>
 
         {/* ── Bottom Card Section ── */}
-        <div className="p-4 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-          <div className="rounded-xl bg-[#f8f9fa] dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 flex flex-col items-center text-center shadow-sm">
-            <div className="flex items-center gap-2 mb-1">
-              <div className="h-6 w-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] font-bold">
-                B
-              </div>
-              <span className="text-[14px] font-bold text-gray-900 dark:text-gray-100">
+        <div className="mt-auto">
+          <div className="mx-2 mb-2 p-3 rounded-xl bg-gray-100 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 flex items-center justify-between shadow-sm cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
+            <div className="flex flex-col text-left">
+              <span className="text-[14px] font-bold italic text-gray-900 dark:text-gray-100 leading-tight">
                 Bitscale
               </span>
+              <a
+                href="https://bitscale.ai/support"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] font-medium text-gray-500 dark:text-gray-400 mt-0.5 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Get Support at Bitscale
+              </a>
             </div>
-            <a
-              href="https://bitscale.ai/support"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[12px] font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline transition-all mt-1"
-            >
-              Get Support at Bitscale
-            </a>
+            <ChevronUp className="h-4 w-4 text-gray-400 dark:text-gray-500 shrink-0" />
           </div>
         </div>
       </aside>

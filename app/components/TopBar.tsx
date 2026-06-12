@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import {
   Menu, Bell, ChevronDown, Plus, Users, Building2, Moon, Sun,
@@ -19,6 +20,10 @@ export function TopBar({ onMenuClick }: TopBarProps) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const { openFindPeople, openFindCompanies, openNewGrid } = useModal();
   const { resolvedTheme, setTheme } = useTheme();
+  const pathname = usePathname();
+
+  const isDashboard = pathname === "/dashboard";
+  const breadcrumb = isDashboard ? "dashboard" : (pathname === "/" ? "home" : pathname.replace("/", ""));
 
   const creditsUsed = 450000;
   const creditsTotal = 5500000;
@@ -36,7 +41,7 @@ export function TopBar({ onMenuClick }: TopBarProps) {
   };
 
   return (
-    <header className="sticky top-0 z-10 flex h-[60px] w-full items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 md:px-6">
+    <header className="sticky top-0 z-10 flex h-16 w-full items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 md:px-6">
       {/* Left — hamburger + page title */}
       <div className="flex items-center gap-3">
         <button
@@ -46,8 +51,8 @@ export function TopBar({ onMenuClick }: TopBarProps) {
         >
           <Menu className="h-5 w-5" />
         </button>
-        <h1 className="text-[15px] font-semibold text-gray-900 dark:text-gray-100 tracking-tight hidden sm:block">
-          Dashboard
+        <h1 className="text-[12px] font-medium text-gray-500 dark:text-gray-400 tracking-tight hidden sm:block lowercase">
+          {breadcrumb}
         </h1>
       </div>
 

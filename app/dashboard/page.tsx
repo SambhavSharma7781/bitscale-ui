@@ -350,7 +350,7 @@ export default function DashboardPage() {
                         <GridIcon row={row} />
 
                         {/* Name text */}
-                        <span className="text-[13px] font-medium text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate max-w-[260px]">
+                        <span className="text-[13px] font-medium text-gray-900 dark:text-gray-100 truncate max-w-[260px]">
                           {row.name}
                         </span>
                       </div>

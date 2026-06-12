@@ -174,7 +174,7 @@ export function HomePageClient({ stats }: { stats: Stat[] }) {
                               <ChevronRight className="h-4 w-4 text-gray-400 dark:text-gray-500 -mr-1 shrink-0" />
                             )}
                             <GridIcon row={grid} />
-                            <span className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors text-[13px] truncate max-w-[180px] sm:max-w-xs">
+                            <span className="font-medium text-gray-900 dark:text-gray-100 text-[13px] truncate max-w-[180px] sm:max-w-xs">
                               {grid.name}
                             </span>
                           </div>

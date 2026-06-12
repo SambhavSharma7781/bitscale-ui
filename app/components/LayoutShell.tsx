@@ -24,7 +24,7 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
               {/* Main content area */}
               <div className="flex flex-1 flex-col overflow-hidden">
                 <TopBar onMenuClick={() => setSidebarOpen((v) => !v)} />
-                <main className="flex-1 overflow-y-auto bg-[#f8f9fa] dark:bg-gray-950">
+                <main className="flex-1 overflow-y-auto bg-white dark:bg-gray-950">
                   {children}
                 </main>
               </div>
