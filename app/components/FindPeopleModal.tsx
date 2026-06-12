@@ -106,13 +106,13 @@ function TagInput({
 
   return (
     <div
-      className="min-h-[38px] flex flex-wrap gap-1.5 rounded-lg border border-gray-200 bg-white px-2.5 py-2 cursor-text focus-within:border-gray-400 focus-within:ring-2 focus-within:ring-gray-100 transition-all"
+      className="min-h-[38px] flex flex-wrap gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-2.5 py-2 cursor-text focus-within:border-gray-400 dark:focus-within:border-gray-500 focus-within:ring-2 focus-within:ring-gray-100 dark:focus-within:ring-gray-800 transition-all"
       onClick={() => inputRef.current?.focus()}
     >
       {tags.map((tag) => (
         <span
           key={tag}
-          className="inline-flex items-center gap-1 rounded-md bg-gray-100 px-2 py-0.5 text-[12px] font-medium text-gray-700"
+          className="inline-flex items-center gap-1 rounded-md bg-gray-100 dark:bg-gray-700 px-2 py-0.5 text-[12px] font-medium text-gray-700 dark:text-gray-200"
         >
           {tag}
           <button
@@ -121,7 +121,7 @@ function TagInput({
               e.stopPropagation();
               onRemove(tag);
             }}
-            className="ml-0.5 text-gray-400 hover:text-gray-600 transition-colors"
+            className="ml-0.5 text-gray-400 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
           >
             <X className="h-2.5 w-2.5" />
           </button>
@@ -133,7 +133,7 @@ function TagInput({
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder={tags.length === 0 ? placeholder : ""}
-        className="flex-1 min-w-[120px] bg-transparent text-[12px] text-gray-700 placeholder:text-gray-400 outline-none"
+        className="flex-1 min-w-[120px] bg-transparent text-[12px] text-gray-700 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500 outline-none"
       />
     </div>
   );
@@ -156,32 +156,32 @@ function FilterRow({
   const Icon = section.icon;
 
   return (
-    <div className="border-b border-gray-200 last:border-0">
+    <div className="border-b border-gray-200 dark:border-gray-800 last:border-0">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between px-5 py-3.5 hover:bg-gray-50/70 transition-colors group"
+        className="w-full flex items-center justify-between px-5 py-3.5 hover:bg-gray-50/70 dark:hover:bg-gray-800/60 transition-colors group"
       >
         <div className="flex items-start gap-3 text-left">
-          <Icon className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+          <Icon className="h-4 w-4 text-gray-400 dark:text-gray-500 mt-0.5 shrink-0" />
           <div>
-            <p className="text-[13px] font-semibold text-gray-800 leading-tight">
+            <p className="text-[13px] font-semibold text-gray-800 dark:text-gray-200 leading-tight">
               {section.label}
             </p>
             {!open && (
-              <p className="text-[11px] text-gray-400 mt-0.5">{section.hint}</p>
+              <p className="text-[11px] text-gray-400 dark:text-gray-500 mt-0.5">{section.hint}</p>
             )}
             {open && tags.length > 0 && (
-              <p className="text-[11px] text-blue-500 mt-0.5">
+              <p className="text-[11px] text-blue-500 dark:text-blue-400 mt-0.5">
                 {tags.length} filter{tags.length > 1 ? "s" : ""} applied
               </p>
             )}
           </div>
         </div>
         {open ? (
-          <ChevronUp className="h-4 w-4 text-gray-400 shrink-0" />
+          <ChevronUp className="h-4 w-4 text-gray-400 dark:text-gray-500 shrink-0" />
         ) : (
-          <ChevronDown className="h-4 w-4 text-gray-400 shrink-0" />
+          <ChevronDown className="h-4 w-4 text-gray-400 dark:text-gray-500 shrink-0" />
         )}
       </button>
 
@@ -199,9 +199,9 @@ function FilterRow({
             onRemove={(tag) => onRemove(section.id, tag)}
             placeholder={section.placeholder}
           />
-          <p className="text-[10px] text-gray-400 mt-1.5">
-            Press <kbd className="rounded bg-gray-100 px-1 py-0.5 font-mono text-[10px]">Enter</kbd> or{" "}
-            <kbd className="rounded bg-gray-100 px-1 py-0.5 font-mono text-[10px]">,</kbd> to add
+          <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1.5">
+            Press <kbd className="rounded bg-gray-100 dark:bg-gray-800 px-1 py-0.5 font-mono text-[10px] dark:text-gray-300">Enter</kbd> or{" "}
+            <kbd className="rounded bg-gray-100 dark:bg-gray-800 px-1 py-0.5 font-mono text-[10px] dark:text-gray-300">,</kbd> to add
           </p>
         </div>
       </div>
@@ -223,46 +223,46 @@ function EmptyState() {
         aria-hidden="true"
       >
         {/* Shadow ellipse */}
-        <ellipse cx="100" cy="205" rx="55" ry="8" fill="#E5E7EB" />
+        <ellipse cx="100" cy="205" rx="55" ry="8" className="fill-gray-200 dark:fill-gray-800" />
 
         {/* Clipboard body */}
-        <rect x="34" y="30" width="132" height="168" rx="10" fill="#F9FAFB" stroke="#E5E7EB" strokeWidth="2" />
+        <rect x="34" y="30" width="132" height="168" rx="10" className="fill-gray-50 dark:fill-gray-800 stroke-gray-200 dark:stroke-gray-700" strokeWidth="2" />
 
         {/* Clip top */}
-        <rect x="72" y="22" width="56" height="22" rx="6" fill="#E5E7EB" stroke="#D1D5DB" strokeWidth="1.5" />
-        <rect x="84" y="27" width="32" height="10" rx="3" fill="#D1D5DB" />
+        <rect x="72" y="22" width="56" height="22" rx="6" className="fill-gray-200 dark:fill-gray-700 stroke-gray-300 dark:stroke-gray-600" strokeWidth="1.5" />
+        <rect x="84" y="27" width="32" height="10" rx="3" className="fill-gray-300 dark:fill-gray-600" />
 
         {/* Lines */}
-        <rect x="54" y="72" width="92" height="8" rx="4" fill="#E5E7EB" />
-        <rect x="54" y="90" width="72" height="8" rx="4" fill="#EEF2FF" />
-        <rect x="54" y="108" width="84" height="8" rx="4" fill="#E5E7EB" />
-        <rect x="54" y="126" width="60" height="8" rx="4" fill="#EEF2FF" />
-        <rect x="54" y="144" width="76" height="8" rx="4" fill="#E5E7EB" />
+        <rect x="54" y="72" width="92" height="8" rx="4" className="fill-gray-200 dark:fill-gray-700" />
+        <rect x="54" y="90" width="72" height="8" rx="4" className="fill-indigo-50 dark:fill-indigo-900/30" />
+        <rect x="54" y="108" width="84" height="8" rx="4" className="fill-gray-200 dark:fill-gray-700" />
+        <rect x="54" y="126" width="60" height="8" rx="4" className="fill-indigo-50 dark:fill-indigo-900/30" />
+        <rect x="54" y="144" width="76" height="8" rx="4" className="fill-gray-200 dark:fill-gray-700" />
 
         {/* Checkboxes */}
-        <rect x="54" y="72" width="12" height="8" rx="2" fill="#DBEAFE" stroke="#93C5FD" strokeWidth="1" />
-        <path d="M56 76l2.5 2.5 4-4" stroke="#3B82F6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <rect x="54" y="90" width="12" height="8" rx="2" fill="#DBEAFE" stroke="#93C5FD" strokeWidth="1" />
-        <path d="M56 94l2.5 2.5 4-4" stroke="#3B82F6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <rect x="54" y="108" width="12" height="8" rx="2" fill="#E5E7EB" stroke="#D1D5DB" strokeWidth="1" />
-        <rect x="54" y="126" width="12" height="8" rx="2" fill="#E5E7EB" stroke="#D1D5DB" strokeWidth="1" />
-        <rect x="54" y="144" width="12" height="8" rx="2" fill="#E5E7EB" stroke="#D1D5DB" strokeWidth="1" />
+        <rect x="54" y="72" width="12" height="8" rx="2" className="fill-blue-100 dark:fill-blue-900/40 stroke-blue-300 dark:stroke-blue-800" strokeWidth="1" />
+        <path d="M56 76l2.5 2.5 4-4" className="stroke-blue-500 dark:stroke-blue-400" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="54" y="90" width="12" height="8" rx="2" className="fill-blue-100 dark:fill-blue-900/40 stroke-blue-300 dark:stroke-blue-800" strokeWidth="1" />
+        <path d="M56 94l2.5 2.5 4-4" className="stroke-blue-500 dark:stroke-blue-400" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="54" y="108" width="12" height="8" rx="2" className="fill-gray-200 dark:fill-gray-700 stroke-gray-300 dark:stroke-gray-600" strokeWidth="1" />
+        <rect x="54" y="126" width="12" height="8" rx="2" className="fill-gray-200 dark:fill-gray-700 stroke-gray-300 dark:stroke-gray-600" strokeWidth="1" />
+        <rect x="54" y="144" width="12" height="8" rx="2" className="fill-gray-200 dark:fill-gray-700 stroke-gray-300 dark:stroke-gray-600" strokeWidth="1" />
 
         {/* Person figure */}
-        <circle cx="158" cy="90" r="12" fill="#DBEAFE" stroke="#93C5FD" strokeWidth="1.5" />
-        <path d="M146 120 Q158 110 170 120 L172 145 H144 Z" fill="#EEF2FF" stroke="#A5B4FC" strokeWidth="1.5" />
+        <circle cx="158" cy="90" r="12" className="fill-blue-100 dark:fill-blue-900/40 stroke-blue-300 dark:stroke-blue-800" strokeWidth="1.5" />
+        <path d="M146 120 Q158 110 170 120 L172 145 H144 Z" className="fill-indigo-50 dark:fill-indigo-900/30 stroke-indigo-300 dark:stroke-indigo-800" strokeWidth="1.5" />
         {/* Arms */}
-        <path d="M146 125 L136 135" stroke="#A5B4FC" strokeWidth="2" strokeLinecap="round" />
-        <path d="M170 125 L180 115" stroke="#A5B4FC" strokeWidth="2" strokeLinecap="round" />
+        <path d="M146 125 L136 135" className="stroke-indigo-300 dark:stroke-indigo-800" strokeWidth="2" strokeLinecap="round" />
+        <path d="M170 125 L180 115" className="stroke-indigo-300 dark:stroke-indigo-800" strokeWidth="2" strokeLinecap="round" />
         {/* Hand pointing at clipboard */}
-        <circle cx="134" cy="137" r="4" fill="#DBEAFE" stroke="#93C5FD" strokeWidth="1.5" />
+        <circle cx="134" cy="137" r="4" className="fill-blue-100 dark:fill-blue-900/40 stroke-blue-300 dark:stroke-blue-800" strokeWidth="1.5" />
       </svg>
 
-      <p className="text-[13px] font-semibold text-gray-700 text-center leading-relaxed max-w-[280px]">
+      <p className="text-[13px] font-semibold text-gray-700 dark:text-gray-300 text-center leading-relaxed max-w-[280px]">
         Start your search, preview, and import companies for enrichment by applying any filter in the left panel.
       </p>
-      <p className="text-[12px] text-gray-400 mt-2">OR</p>
-      <p className="text-[12px] text-gray-400">Import companies from saved Search.</p>
+      <p className="text-[12px] text-gray-400 dark:text-gray-500 mt-2">OR</p>
+      <p className="text-[12px] text-gray-400 dark:text-gray-500">Import companies from saved Search.</p>
     </div>
   );
 }
@@ -344,25 +344,25 @@ export function FindPeopleModal() {
         aria-modal="true"
         aria-label="Find People"
         className={cn(
-          "fixed inset-4 sm:inset-8 md:inset-[5vh_5vw] z-50 flex rounded-2xl bg-white shadow-[0_32px_64px_-12px_rgba(0,0,0,0.28),0_0_0_1px_rgba(0,0,0,0.06)] overflow-hidden transition-all duration-200",
+          "fixed inset-4 sm:inset-8 md:inset-[5vh_5vw] z-50 flex rounded-2xl bg-white dark:bg-gray-900 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.28),0_0_0_1px_rgba(0,0,0,0.06)] dark:shadow-[0_32px_64px_-12px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.08)] overflow-hidden transition-all duration-200",
           findPeopleOpen
             ? "opacity-100 scale-100 pointer-events-auto"
             : "opacity-0 scale-95 pointer-events-none"
         )}
       >
         {/* ════════════════════════ LEFT PANEL ════════════════════════ */}
-        <div className="flex w-[340px] md:w-[380px] shrink-0 flex-col border-r border-gray-100 bg-white">
+        <div className="flex w-[340px] md:w-[380px] shrink-0 flex-col border-r border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4">
+          <div className="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 px-5 py-4">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-violet-100">
-                <Users className="h-4 w-4 text-violet-600" />
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-violet-100 dark:bg-violet-900/30">
+                <Users className="h-4 w-4 text-violet-600 dark:text-violet-400" />
               </div>
-              <h2 className="text-[15px] font-bold text-gray-900 tracking-tight">
+              <h2 className="text-[15px] font-bold text-gray-900 dark:text-gray-100 tracking-tight">
                 Find People
               </h2>
               {totalFilters > 0 && (
-                <span className="inline-flex items-center justify-center h-5 min-w-5 rounded-full bg-violet-600 text-white text-[10px] font-bold px-1.5">
+                <span className="inline-flex items-center justify-center h-5 min-w-5 rounded-full bg-violet-600 dark:bg-violet-500 text-white text-[10px] font-bold px-1.5">
                   {totalFilters}
                 </span>
               )}
@@ -375,26 +375,26 @@ export function FindPeopleModal() {
                   id="saved-search-btn"
                   type="button"
                   onClick={() => setSavedSearchOpen((v) => !v)}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-2.5 py-1.5 text-[12px] font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-2.5 py-1.5 text-[12px] font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all"
                 >
-                  <BookmarkPlus className="h-3.5 w-3.5 text-gray-400" />
+                  <BookmarkPlus className="h-3.5 w-3.5 text-gray-400 dark:text-gray-500" />
                   Saved Search
                   <ChevronDown
                     className={cn(
-                      "h-3 w-3 text-gray-400 transition-transform duration-150",
+                      "h-3 w-3 text-gray-400 dark:text-gray-500 transition-transform duration-150",
                       savedSearchOpen && "rotate-180"
                     )}
                   />
                 </button>
 
                 {savedSearchOpen && (
-                  <div className="absolute right-0 top-full mt-1.5 w-48 rounded-xl border border-gray-100 bg-white shadow-lg shadow-gray-200/80 ring-1 ring-black/5 py-1.5 z-10">
-                    <p className="px-3 py-2 text-[11px] text-gray-400 text-center">
+                  <div className="absolute right-0 top-full mt-1.5 w-48 rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-lg shadow-gray-200/80 dark:shadow-black/40 ring-1 ring-black/5 py-1.5 z-10">
+                    <p className="px-3 py-2 text-[11px] text-gray-400 dark:text-gray-500 text-center">
                       No saved searches yet
                     </p>
-                    <div className="border-t border-gray-100 mx-2 my-1" />
-                    <button className="w-full text-left px-3 py-2 text-[12px] text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2">
-                      <BookmarkPlus className="h-3.5 w-3.5 text-gray-400" />
+                    <div className="border-t border-gray-100 dark:border-gray-800 mx-2 my-1" />
+                    <button className="w-full text-left px-3 py-2 text-[12px] text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-2">
+                      <BookmarkPlus className="h-3.5 w-3.5 text-gray-400 dark:text-gray-500" />
                       Save current search
                     </button>
                   </div>
@@ -404,20 +404,20 @@ export function FindPeopleModal() {
           </div>
 
           {/* People Keyword */}
-          <div className="border-b border-gray-100 px-5 py-4">
+          <div className="border-b border-gray-100 dark:border-gray-800 px-5 py-4">
             <div className="flex items-center gap-2 mb-2.5">
-              <Users className="h-3.5 w-3.5 text-gray-400" />
-              <span className="text-[12px] font-semibold text-gray-700">People Keyword</span>
+              <Users className="h-3.5 w-3.5 text-gray-400 dark:text-gray-500" />
+              <span className="text-[12px] font-semibold text-gray-700 dark:text-gray-300">People Keyword</span>
             </div>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400 pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400 dark:text-gray-500 pointer-events-none" />
               <input
                 id="people-keyword-input"
                 type="text"
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Enter single keyword here..."
-                className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-3 text-[13px] text-gray-800 placeholder:text-gray-400 outline-none focus:border-gray-400 focus:ring-2 focus:ring-gray-100 transition-all"
+                className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-2.5 pl-9 pr-3 text-[13px] text-gray-800 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500 outline-none focus:border-gray-400 dark:focus:border-gray-500 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-800 transition-all"
               />
             </div>
           </div>
@@ -436,13 +436,13 @@ export function FindPeopleModal() {
           </div>
 
           {/* Sticky bottom bar */}
-          <div className="border-t border-gray-100 bg-white px-5 py-3.5">
+          <div className="border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-5 py-3.5">
             <div className="flex items-center gap-2.5">
               {totalFilters > 0 && (
                 <button
                   type="button"
                   onClick={handleReset}
-                  className="text-[12px] text-gray-400 hover:text-gray-600 transition-colors underline underline-offset-2 mr-auto"
+                  className="text-[12px] text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors underline underline-offset-2 mr-auto"
                 >
                   Reset all
                 </button>
@@ -450,15 +450,15 @@ export function FindPeopleModal() {
               <button
                 id="save-search-btn"
                 type="button"
-                className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-[13px] font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm"
+                className="flex items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2 text-[13px] font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all shadow-sm"
               >
-                <BookmarkPlus className="h-3.5 w-3.5 text-gray-500" />
+                <BookmarkPlus className="h-3.5 w-3.5 text-gray-500 dark:text-gray-400" />
                 Save Search
               </button>
               <button
                 id="preview-result-btn"
                 type="button"
-                className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-[13px] font-semibold text-white hover:bg-gray-800 active:bg-gray-950 transition-all shadow-sm"
+                className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-gray-900 dark:bg-gray-100 px-4 py-2 text-[13px] font-semibold text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-white active:bg-gray-950 transition-all shadow-sm"
               >
                 <Eye className="h-3.5 w-3.5" />
                 Preview Result
@@ -468,54 +468,54 @@ export function FindPeopleModal() {
         </div>
 
         {/* ════════════════════════ RIGHT PANEL ════════════════════════ */}
-        <div className="flex flex-1 flex-col min-w-0 bg-gray-50/40">
+        <div className="flex flex-1 flex-col min-w-0 bg-gray-50/40 dark:bg-gray-950/40">
           {/* Top info bar */}
-          <div className="flex items-center justify-between gap-4 border-b border-gray-100 bg-white px-5 py-3">
+          <div className="flex items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-5 py-3">
             <div className="flex items-center gap-2 min-w-0">
               {/* Close button */}
               <button
                 id="modal-close-btn"
                 type="button"
                 onClick={closeFindPeople}
-                className="mr-1 flex h-7 w-7 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors"
+                className="mr-1 flex h-7 w-7 items-center justify-center rounded-lg text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                 aria-label="Close modal"
               >
                 <X className="h-4 w-4" />
               </button>
-              <span className="text-[13px] text-gray-500 truncate">
+              <span className="text-[13px] text-gray-500 dark:text-gray-400 truncate">
                 Found{" "}
-                <span className="font-semibold text-gray-800">0 companies.</span>{" "}
+                <span className="font-semibold text-gray-800 dark:text-gray-200">0 companies.</span>{" "}
                 Click preview to view results
               </span>
             </div>
 
             <div className="flex items-center gap-3 shrink-0">
               {/* Unlock banner */}
-              <div className="hidden sm:flex items-center gap-1.5 rounded-lg border border-orange-200 bg-orange-50 px-3 py-1.5">
-                <Lock className="h-3.5 w-3.5 text-orange-500 shrink-0" />
-                <span className="text-[12px] text-orange-700">
+              <div className="hidden sm:flex items-center gap-1.5 rounded-lg border border-orange-200 dark:border-orange-800/60 bg-orange-50 dark:bg-orange-900/20 px-3 py-1.5">
+                <Lock className="h-3.5 w-3.5 text-orange-500 dark:text-orange-400 shrink-0" />
+                <span className="text-[12px] text-orange-700 dark:text-orange-300">
                   Unlock{" "}
                   <span className="font-bold">100,000 leads</span>{" "}
                   with{" "}
-                  <span className="font-bold text-orange-600 cursor-pointer hover:underline">
+                  <span className="font-bold text-orange-600 dark:text-orange-400 cursor-pointer hover:underline">
                     Enterprise Plan★
                   </span>
                 </span>
               </div>
 
               {/* Credit counter */}
-              <div className="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-2.5 py-1.5">
-                <div className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                <span className="text-[12px] font-semibold text-gray-700 tabular-nums">
+              <div className="flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-2.5 py-1.5">
+                <div className="h-1.5 w-1.5 rounded-full bg-green-500 dark:bg-green-400" />
+                <span className="text-[12px] font-semibold text-gray-700 dark:text-gray-300 tabular-nums">
                   8,000
-                  <span className="font-normal text-gray-400">/50,000</span>
+                  <span className="font-normal text-gray-400 dark:text-gray-500">/50,000</span>
                 </span>
               </div>
             </div>
           </div>
 
           {/* Column headers */}
-          <div className="border-b border-gray-100 bg-white px-5">
+          <div className="border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-5">
             <div className="flex items-center gap-0 overflow-x-auto">
               {[
                 "NAME",
@@ -528,7 +528,7 @@ export function FindPeopleModal() {
                 <div
                   key={col}
                   className={cn(
-                    "shrink-0 py-2.5 pr-8 text-[11px] font-semibold text-gray-400 tracking-widest uppercase",
+                    "shrink-0 py-2.5 pr-8 text-[11px] font-semibold text-gray-400 dark:text-gray-500 tracking-widest uppercase",
                     i === 0 && "min-w-[140px]",
                     i === 1 && "min-w-[120px]",
                     i === 2 && "min-w-[160px]",

@@ -3,12 +3,18 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
 interface ModalContextValue {
+  // Find People
   findPeopleOpen: boolean;
   openFindPeople: () => void;
   closeFindPeople: () => void;
+  // Find Companies
   findCompaniesOpen: boolean;
   openFindCompanies: () => void;
   closeFindCompanies: () => void;
+  // New Grid
+  newGridOpen: boolean;
+  openNewGrid: () => void;
+  closeNewGrid: () => void;
 }
 
 const ModalContext = createContext<ModalContextValue | null>(null);
@@ -16,6 +22,7 @@ const ModalContext = createContext<ModalContextValue | null>(null);
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [findPeopleOpen, setFindPeopleOpen] = useState(false);
   const [findCompaniesOpen, setFindCompaniesOpen] = useState(false);
+  const [newGridOpen, setNewGridOpen] = useState(false);
 
   return (
     <ModalContext.Provider
@@ -26,6 +33,9 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         findCompaniesOpen,
         openFindCompanies: () => setFindCompaniesOpen(true),
         closeFindCompanies: () => setFindCompaniesOpen(false),
+        newGridOpen,
+        openNewGrid: () => setNewGridOpen(true),
+        closeNewGrid: () => setNewGridOpen(false),
       }}
     >
       {children}

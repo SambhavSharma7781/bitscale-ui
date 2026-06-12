@@ -65,7 +65,7 @@ export function QuickActionsSection() {
 
   return (
     <div>
-      <h2 className="text-sm font-semibold text-gray-700 mb-3">Quick Actions</h2>
+      <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Quick Actions</h2>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {quickActions.map((action) => {
           const Icon = action.icon;
@@ -75,7 +75,7 @@ export function QuickActionsSection() {
               id={`quick-action-${action.id}`}
               type="button"
               onClick={() => handleAction(action)}
-              className="group relative overflow-hidden rounded-xl border border-gray-100 bg-white p-4 shadow-sm hover:shadow-md hover:border-gray-200 transition-all duration-200 flex flex-col gap-3 text-left"
+              className="group relative overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm hover:shadow-md hover:border-gray-200 dark:hover:border-gray-700 transition-all duration-200 flex flex-col gap-3 text-left"
             >
               <div
                 className={`h-9 w-9 rounded-lg bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-sm`}
@@ -83,14 +83,14 @@ export function QuickActionsSection() {
                 <Icon className="h-4 w-4 text-white" />
               </div>
               <div>
-                <p className="text-[13px] font-semibold text-gray-900 group-hover:text-gray-800">
+                <p className="text-[13px] font-semibold text-gray-900 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-white">
                   {action.title}
                 </p>
-                <p className="text-[11px] text-gray-500 mt-0.5 leading-snug">
+                <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5 leading-snug">
                   {action.description}
                 </p>
               </div>
-              <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-300 group-hover:text-gray-400 group-hover:translate-x-0.5 transition-all" />
+              <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-300 dark:text-gray-600 group-hover:text-gray-400 dark:group-hover:text-gray-400 group-hover:translate-x-0.5 transition-all" />
             </button>
           );
         })}
