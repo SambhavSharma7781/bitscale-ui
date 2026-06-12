@@ -124,7 +124,7 @@ export function HomePageClient({ stats }: { stats: Stat[] }) {
           <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300">Recent Grids</h2>
           <a
             href="/dashboard"
-            className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1 transition-colors"
+            className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1 cursor-pointer transition-colors"
           >
             View all
             <ArrowUpRight className="h-3 w-3" />
@@ -200,7 +200,7 @@ export function HomePageClient({ stats }: { stats: Stat[] }) {
                             <button
                               type="button"
                               title="Edit"
-                              className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                              className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer transition-colors"
                               onClick={(e) => e.stopPropagation()}
                             >
                               <Pencil className="h-3.5 w-3.5" />
@@ -208,7 +208,7 @@ export function HomePageClient({ stats }: { stats: Stat[] }) {
                             <button
                               type="button"
                               title="Duplicate"
-                              className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                              className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer transition-colors"
                               onClick={(e) => e.stopPropagation()}
                             >
                               <Copy className="h-3.5 w-3.5" />
@@ -216,7 +216,7 @@ export function HomePageClient({ stats }: { stats: Stat[] }) {
                             <button
                               type="button"
                               title="Delete"
-                              className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-red-50 dark:hover:bg-red-950/40 hover:text-red-500 transition-colors"
+                              className="flex h-6 w-6 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-red-50 dark:hover:bg-red-950/40 hover:text-red-500 cursor-pointer transition-colors"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 deleteGrid(grid.id);
@@ -253,7 +253,7 @@ export function HomePageClient({ stats }: { stats: Stat[] }) {
         </div>
         <a
           href="/billing"
-          className="shrink-0 inline-flex items-center gap-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-4 py-2 text-[13px] font-semibold text-gray-700 dark:text-gray-300 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all"
+          className="shrink-0 inline-flex items-center gap-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-4 py-2 text-[13px] font-semibold text-gray-700 dark:text-gray-300 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 cursor-pointer transition-all"
         >
           Manage Plan
           <ArrowUpRight className="h-3.5 w-3.5" />

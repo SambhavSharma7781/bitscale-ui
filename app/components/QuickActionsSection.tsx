@@ -75,7 +75,7 @@ export function QuickActionsSection() {
               id={`quick-action-${action.id}`}
               type="button"
               onClick={() => handleAction(action)}
-              className="group relative overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm hover:shadow-md hover:border-gray-200 dark:hover:border-gray-700 transition-all duration-200 flex flex-col gap-3 text-left"
+              className="group relative overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm hover:shadow-md hover:border-gray-200 dark:hover:border-gray-700 cursor-pointer transition-all duration-200 flex flex-col gap-3 text-left"
             >
               <div
                 className={`h-9 w-9 rounded-lg bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-sm`}

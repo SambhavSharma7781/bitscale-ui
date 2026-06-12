@@ -41,7 +41,7 @@ function TagInput({ tags, onAdd, onRemove }: { tags: string[]; onAdd: (t: string
       {tags.map(t => (
         <span key={t} className="inline-flex items-center gap-1 rounded bg-gray-100 dark:bg-gray-700 px-2 py-0.5 text-xs font-medium text-gray-700 dark:text-gray-200">
           {t}
-          <button type="button" onClick={e => { e.stopPropagation(); onRemove(t); }} className="text-gray-400 hover:text-gray-700">
+          <button type="button" onClick={e => { e.stopPropagation(); onRemove(t); }} className="text-gray-400 hover:text-gray-700 cursor-pointer">
             <X className="h-2.5 w-2.5" />
           </button>
         </span>
@@ -66,7 +66,7 @@ function FilterRow({ section, tags, onAdd, onRemove }: {
     <div className="border-b border-gray-100 dark:border-gray-800">
       <button
         type="button" onClick={() => setOpen(v => !v)}
-        className="w-full flex items-center justify-between px-5 py-3 hover:bg-gray-50/70 dark:hover:bg-gray-800/50 transition-colors text-left"
+        className="w-full flex items-center justify-between px-5 py-3 hover:bg-gray-50/70 dark:hover:bg-gray-800/50 cursor-pointer transition-colors text-left"
       >
         <div className="flex items-center gap-3">
           <Icon className="h-4 w-4 text-gray-400 dark:text-gray-500 shrink-0" />
@@ -158,7 +158,7 @@ export function FindCompaniesModal() {
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center sm:items-center p-4 sm:p-6">
       {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/30 backdrop-blur-[2px]" onClick={closeFindCompanies} aria-hidden="true" />
+      <div className="fixed inset-0 bg-black/30 backdrop-blur-[2px] cursor-default" onClick={closeFindCompanies} aria-hidden="true" />
 
       {/* Modal card */}
       <div
@@ -172,7 +172,7 @@ export function FindCompaniesModal() {
             <div className="relative">
               <button
                 onClick={() => setSavedOpen(v => !v)}
-                className="flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                className="flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-2.5 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors"
               >
                 <ChevronDown className="h-3 w-3" /> Saved Search
               </button>
@@ -180,7 +180,7 @@ export function FindCompaniesModal() {
                 <div className="absolute left-0 top-full mt-1.5 w-48 rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-lg py-1.5 z-30">
                   <p className="px-3 py-2 text-xs text-gray-400 text-center">No saved searches yet</p>
                   <div className="border-t border-gray-100 dark:border-gray-800 mx-3 my-1" />
-                  <button className="w-full text-left px-3 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-2">
+                  <button className="w-full text-left px-3 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors flex items-center gap-2">
                     <BookmarkPlus className="h-3.5 w-3.5 text-gray-400" />
                     Save current search
                   </button>
@@ -190,7 +190,7 @@ export function FindCompaniesModal() {
           </div>
           <button
             onClick={closeFindCompanies}
-            className="flex h-7 w-7 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 transition-colors"
+            className="flex h-7 w-7 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 cursor-pointer transition-colors"
             aria-label="Close"
           >
             <X className="h-4 w-4" />
@@ -214,7 +214,7 @@ export function FindCompaniesModal() {
                 <input
                   type="text" value={keyword} onChange={e => setKeyword(e.target.value)}
                   placeholder="Enter single keyword here..."
-                  className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-2 pl-9 pr-3 text-sm text-gray-800 dark:text-gray-100 placeholder:text-gray-400 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50 transition-all"
+                  className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-2 pl-9 pr-3 text-sm text-gray-800 dark:text-gray-100 placeholder:text-gray-400 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50 cursor-text transition-all"
                 />
               </div>
             </div>
@@ -231,11 +231,11 @@ export function FindCompaniesModal() {
 
             {/* Bottom bar */}
             <div className="border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 py-3 flex items-center gap-2 shrink-0">
-              <button className="h-9 flex-1 whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-transparent text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors px-2">
+              <button className="h-9 flex-1 whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-transparent text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors px-2">
                 <BookmarkPlus className="h-3.5 w-3.5 text-gray-500 shrink-0" />
                 Save Search
               </button>
-              <button className="h-9 flex-1 whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-lg bg-gray-900 dark:bg-white text-xs font-semibold text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors px-2">
+              <button className="h-9 flex-1 whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-lg bg-gray-900 dark:bg-white text-xs font-semibold text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 cursor-pointer transition-colors px-2">
                 <Eye className="h-3.5 w-3.5 shrink-0" />
                 Preview Result
               </button>

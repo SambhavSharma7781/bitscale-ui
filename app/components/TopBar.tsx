@@ -34,11 +34,11 @@ export function TopBar({ onMenuClick }: TopBarProps) {
 
   return (
     <header className="sticky top-0 z-10 flex h-16 w-full items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 md:px-6">
-      {/* Left side is completely empty except for mobile menu button */}
+      {/* Left side — mobile menu only */}
       <div className="flex items-center">
         <button
           onClick={onMenuClick}
-          className="flex h-8 w-8 items-center justify-center rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-200 transition-colors lg:hidden"
+          className="flex h-8 w-8 items-center justify-center rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-200 cursor-pointer transition-colors lg:hidden"
           aria-label="Open sidebar"
         >
           <Menu className="h-5 w-5" />
@@ -47,15 +47,15 @@ export function TopBar({ onMenuClick }: TopBarProps) {
 
       {/* Right — credits, badge, actions, avatar */}
       <div className="flex items-center gap-2 sm:gap-3">
-        {/* Credits & Booster Plan Combined Pill */}
-        <div className="hidden sm:flex items-center gap-3 rounded-full bg-[#f1f5f2] dark:bg-green-900/30 pl-3 pr-1.5 py-1.5">
+        {/* Credits & Booster Plan pill */}
+        <div className="hidden sm:flex items-center gap-3 rounded-full bg-[#f1f5f2] dark:bg-[#1a2332] pl-3 pr-1.5 py-1.5 border border-transparent dark:border-[#2a3a4a]">
           <div className="flex items-center gap-2 pl-1">
-            <Coins className="h-[18px] w-[18px] text-[#42795a] dark:text-green-400" strokeWidth={2} />
-            <span className="text-[15px] font-medium text-[#42795a] dark:text-green-400 tracking-tight">
+            <Coins className="h-[18px] w-[18px] text-[#42795a] dark:text-[#7db898]" strokeWidth={2} />
+            <span className="text-[15px] font-medium text-[#42795a] dark:text-[#a8c5b0] tracking-tight">
               {formatCredits(creditsUsed)}/{formatCredits(creditsTotal)}
             </span>
           </div>
-          <button className="flex items-center justify-center rounded-full bg-[#42795a] dark:bg-green-600 px-3.5 py-1.5 hover:bg-[#36634a] dark:hover:bg-green-500 transition-colors">
+          <button className="flex items-center justify-center rounded-full bg-[#42795a] dark:bg-[#2d5a40] px-3.5 py-1.5 hover:bg-[#36634a] dark:hover:bg-[#3a6e4e] cursor-pointer transition-colors">
             <span className="text-[13px] font-medium text-white tracking-wide">Booster Plan</span>
           </button>
         </div>
@@ -68,7 +68,7 @@ export function TopBar({ onMenuClick }: TopBarProps) {
           id="theme-toggle-btn"
           type="button"
           onClick={toggleTheme}
-          className="relative flex h-8 w-8 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+          className="relative flex h-8 w-8 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer transition-colors"
           aria-label="Toggle dark mode"
         >
           <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -76,7 +76,7 @@ export function TopBar({ onMenuClick }: TopBarProps) {
         </button>
 
         {/* Notification bell */}
-        <button className="relative flex h-8 w-8 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+        <button className="relative flex h-8 w-8 items-center justify-center rounded-md text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer transition-colors">
           <Bell className="h-4 w-4" />
           <span className="absolute top-1.5 right-1.5 h-1.5 w-1.5 rounded-full bg-blue-500" />
         </button>
@@ -85,7 +85,7 @@ export function TopBar({ onMenuClick }: TopBarProps) {
         <div className="relative">
           <button
             onClick={() => setIsProfileOpen((p) => !p)}
-            className="flex items-center gap-2 rounded-lg p-1 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            className="flex items-center gap-2 rounded-lg p-1 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors"
           >
             <Avatar className="h-7 w-7 ring-2 ring-white dark:ring-gray-900 shadow-sm">
               <AvatarImage src="" alt="Sambhav Sharma" />
@@ -117,13 +117,13 @@ export function TopBar({ onMenuClick }: TopBarProps) {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsProfileOpen(false)}
-                  className="block px-3 py-2 text-[13px] text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                  className="block px-3 py-2 text-[13px] text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 cursor-pointer transition-colors"
                 >
                   {item.label}
                 </a>
               ))}
               <div className="border-t border-gray-100 dark:border-gray-800 mt-1 pt-1">
-                <button className="w-full text-left px-3 py-2 text-[13px] text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors">
+                <button className="w-full text-left px-3 py-2 text-[13px] text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 cursor-pointer transition-colors">
                   Sign out
                 </button>
               </div>

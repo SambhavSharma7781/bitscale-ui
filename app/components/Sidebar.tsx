@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Home,
   LayoutDashboard,
   BookOpen,
   Plug,
@@ -27,18 +26,14 @@ interface NavItem {
 }
 
 const navItemsHome: NavItem[] = [
-  { label: "Home", href: "/", icon: Home, built: true },
   { label: "My Dashboard", href: "/dashboard", icon: LayoutDashboard, built: true },
-];
-
-const navItemsPlaybooks: NavItem[] = [
-  { label: "Playbooks", href: "/playbooks", icon: BookOpen, built: false, badge: "🚀" },
-  { label: "Integrations", href: "/integrations", icon: Plug, built: false },
+  { label: "Playbooks",    href: "/playbooks",    icon: BookOpen,        built: false, badge: "🚀" },
+  { label: "Integrations", href: "/integrations", icon: Plug,            built: false },
 ];
 
 const navItemsOther: NavItem[] = [
   { label: "Documentation", href: "/documentation", icon: FileText, built: false },
-  { label: "Settings", href: "/settings", icon: Settings, built: false },
+  { label: "Settings",      href: "/settings",      icon: Settings, built: false },
 ];
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
@@ -53,7 +48,6 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const { showToast } = useToast();
 
   const isActive = (item: NavItem) => {
-    if (item.href === "/") return pathname === "/";
     return pathname.startsWith(item.href);
   };
 
@@ -72,7 +66,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               showToast("Coming Soon 🚀");
             }}
             className={cn(
-              "w-full group flex items-center gap-3 rounded-md px-3 py-2 text-[13px] font-medium",
+              "w-full group flex items-center gap-3 rounded-md px-3 py-2 text-[13px] font-medium cursor-pointer",
               "transition-all duration-150 ease-out",
               "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100"
             )}
@@ -94,7 +88,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             if (window.innerWidth < 1024) onClose();
           }}
           className={cn(
-            "group flex items-center gap-3 rounded-md px-3 py-2 text-[13px] font-medium",
+            "group flex items-center gap-3 rounded-md px-3 py-2 text-[13px] font-medium cursor-pointer",
             "transition-all duration-150 ease-out",
             active
               ? "bg-blue-50/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-semibold"
@@ -144,28 +138,36 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             </span>
             <button
               onClick={onClose}
-              className="flex h-7 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 transition-colors lg:hidden"
+              className="flex h-7 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer transition-colors lg:hidden"
             >
               <X className="h-4 w-4" />
             </button>
           </div>
 
-          <div className="p-3 border-b border-gray-200 dark:border-gray-800">
-            <button className="flex w-full items-center justify-between rounded-lg px-2 py-2 hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors group">
-              <div className="flex items-center gap-2.5">
-                <div className="h-6 w-6 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center text-[10px] font-bold">
-                  GT
+          <div className="px-3 py-3 border-b border-gray-200 dark:border-gray-800">
+            <button className="flex w-full items-center justify-between rounded-xl px-2 py-2 hover:bg-gray-50 dark:hover:bg-gray-800/60 cursor-pointer transition-colors group">
+              <div className="flex items-center gap-3">
+                {/* Two overlapping circular avatars */}
+                <div className="flex items-center shrink-0">
+                  <div className="h-9 w-9 rounded-full overflow-hidden ring-2 ring-white dark:ring-gray-900 shadow-sm z-10">
+                    <img src="/avatar.png" alt="Member 1" className="h-full w-full object-cover" />
+                  </div>
+                  <div className="h-9 w-9 rounded-full overflow-hidden ring-2 ring-white dark:ring-gray-900 shadow-sm -ml-3">
+                    <img src="/avatar2.png" alt="Member 2" className="h-full w-full object-cover" />
+                  </div>
                 </div>
-                <span className="text-[13px] font-semibold text-gray-900 dark:text-gray-100">
+                <span className="text-[15px] font-bold text-gray-900 dark:text-gray-100 tracking-tight">
                   GTM Spaces
                 </span>
               </div>
-              <div className="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300">
-                <ChevronUp className="h-2.5 w-2.5 -mb-1" />
-                <ChevronDown className="h-2.5 w-2.5" />
+              {/* Up/down chevron */}
+              <div className="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
+                <ChevronUp className="h-3 w-3 -mb-0.5" />
+                <ChevronDown className="h-3 w-3" />
               </div>
             </button>
           </div>
+
         </div>
 
         {/* ── Navigation ── */}
@@ -176,7 +178,6 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               Home
             </p>
             {renderNavList(navItemsHome)}
-            {renderNavList(navItemsPlaybooks)}
           </div>
 
           {/* Other Section */}
@@ -199,7 +200,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 href="https://bitscale.ai/support"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[11px] font-medium text-gray-500 dark:text-gray-400 mt-0.5 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+                className="text-[11px] font-medium text-gray-500 dark:text-gray-400 mt-0.5 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer transition-colors"
                 onClick={(e) => e.stopPropagation()}
               >
                 Get Support at Bitscale

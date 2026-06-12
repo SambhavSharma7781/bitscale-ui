@@ -169,7 +169,7 @@ export function NewGridModal() {
       {/* Backdrop */}
       <div
         className={cn(
-          "fixed inset-0 z-50 bg-black/50 backdrop-blur-[2px] transition-opacity duration-200",
+          "fixed inset-0 z-50 bg-black/50 backdrop-blur-[2px] transition-opacity duration-200 cursor-default",
           newGridOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
         onClick={handleClose}
@@ -202,7 +202,7 @@ export function NewGridModal() {
             id="new-grid-modal-close"
             type="button"
             onClick={handleClose}
-            className="flex h-7 w-7 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            className="flex h-7 w-7 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer transition-colors"
             aria-label="Close"
           >
             <X className="h-4 w-4" />
@@ -229,7 +229,7 @@ export function NewGridModal() {
                 if (e.key === "Enter" && canCreate) handleCreate();
               }}
               placeholder="e.g. Series B SaaS Companies"
-              className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3.5 py-2.5 text-[13px] text-gray-800 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 outline-none focus:border-gray-400 dark:focus:border-gray-500 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-800 transition-all"
+              className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3.5 py-2.5 text-[13px] text-gray-800 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 outline-none focus:border-gray-400 dark:focus:border-gray-500 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-800 cursor-text transition-all"
             />
           </div>
 
@@ -249,7 +249,7 @@ export function NewGridModal() {
                     id={`source-type-${source.id}`}
                     onClick={() => setSelectedSource(source.id)}
                     className={cn(
-                      "relative flex flex-col items-start gap-2 rounded-xl border-2 p-3.5 text-left transition-all duration-150 group",
+                      "relative flex flex-col items-start gap-2 rounded-xl border-2 p-3.5 text-left cursor-pointer transition-all duration-150 group",
                       isSelected
                         ? `${source.selectedBorder} ${source.selectedBg} shadow-sm`
                         : `${source.border} bg-white dark:bg-gray-800/50 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800`
@@ -286,7 +286,7 @@ export function NewGridModal() {
           <button
             type="button"
             onClick={handleClose}
-            className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2 text-[13px] font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all"
+            className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2 text-[13px] font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 cursor-pointer transition-all"
           >
             Cancel
           </button>
@@ -298,7 +298,7 @@ export function NewGridModal() {
             className={cn(
               "rounded-lg px-5 py-2 text-[13px] font-semibold text-white transition-all",
               canCreate
-                ? "bg-gray-900 dark:bg-gray-100 dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-white active:bg-gray-950 shadow-sm"
+                ? "bg-gray-900 dark:bg-gray-100 dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-white active:bg-gray-950 shadow-sm cursor-pointer"
                 : "bg-gray-300 dark:bg-gray-700 dark:text-gray-500 cursor-not-allowed"
             )}
           >
