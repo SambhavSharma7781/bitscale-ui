@@ -13,7 +13,7 @@ interface FilterSection {
   id: string;
   label: string;
   hint: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number | string }>;
 }
 
 const filterSections: FilterSection[] = [
@@ -149,15 +149,24 @@ export function FindPeopleModal() {
       {/* Modal card */}
       <div
         role="dialog" aria-modal="true" aria-label="Find People"
-        className="relative z-10 flex flex-col w-[95vw] max-w-[1040px] h-[88vh] max-h-[760px] rounded-[16px] bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden mt-10 sm:mt-0"
+        className="relative z-10 flex flex-col w-[95vw] max-w-[1040px] h-auto md:h-[88vh] max-h-[90vh] md:max-h-[760px] rounded-[16px] bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-800 overflow-y-auto md:overflow-hidden mt-10 sm:mt-0"
       >
+        {/* Absolute Close button in top right of modal */}
+        <button
+          onClick={closeFindPeople}
+          className="absolute top-5 right-5 flex h-7 w-7 items-center justify-center rounded-md bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-700 cursor-pointer transition-colors z-50"
+          aria-label="Close"
+        >
+          <X className="h-4 w-4" />
+        </button>
+
         {/* ── Full Height Split Layout ── */}
-        <div className="flex flex-col md:flex-row flex-1 min-h-0 h-full">
+        <div className="flex flex-col md:flex-row flex-1 min-h-0 h-max md:h-full">
 
           {/* LEFT PANEL */}
           <div className="flex flex-col w-full md:w-[340px] shrink-0 bg-white dark:bg-gray-900 z-10">
             {/* Left Panel Header */}
-            <div className="flex items-center justify-between px-6 py-5 shrink-0">
+            <div className="flex flex-wrap items-center justify-between gap-3 px-6 py-5 shrink-0 pr-16 md:pr-6">
               <h2 className="text-[20px] font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">Find People</h2>
               <button
                 onClick={() => setSavedOpen(v => !v)}
@@ -196,19 +205,19 @@ export function FindPeopleModal() {
             <div className="h-px bg-gray-100 dark:bg-gray-800 mx-5" />
 
             {/* Filter sections */}
-            <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <div className="flex-1 overflow-visible md:overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               {filterSections.map(s => (
                 <FilterRow key={s.id} section={s} tags={filterTags[s.id]} onAdd={addTag} onRemove={removeTag} />
               ))}
             </div>
 
             {/* Bottom bar */}
-            <div className="bg-white dark:bg-gray-900 px-4 py-3 flex items-center gap-2 shrink-0">
-              <button className="h-9 flex-1 whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-transparent text-[12px] font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors px-2">
+            <div className="bg-white dark:bg-gray-900 px-4 py-3 flex flex-col sm:flex-row items-center gap-2 shrink-0">
+              <button className="h-9 w-full sm:w-auto sm:flex-1 whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-transparent text-[12px] font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors px-2">
                 <BookmarkPlus className="h-4 w-4 text-gray-500 shrink-0" />
                 Save Search
               </button>
-              <button className="h-9 flex-1 whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#1e293b] dark:bg-white text-[12px] font-bold text-white dark:text-gray-900 hover:bg-slate-800 dark:hover:bg-gray-100 cursor-pointer transition-colors px-2">
+              <button className="h-9 w-full sm:w-auto sm:flex-1 whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#1e293b] dark:bg-white text-[12px] font-bold text-white dark:text-gray-900 hover:bg-slate-800 dark:hover:bg-gray-100 cursor-pointer transition-colors px-2">
                 <Eye className="h-4 w-4 shrink-0" />
                 Preview Result
               </button>
@@ -216,16 +225,7 @@ export function FindPeopleModal() {
           </div>
 
           {/* RIGHT PANEL */}
-          <div className="flex flex-1 flex-col overflow-hidden bg-white dark:bg-gray-900 p-6 pt-5 min-h-[300px] md:min-h-0 relative">
-            
-            {/* Absolute Close button in top right */}
-            <button
-              onClick={closeFindPeople}
-              className="absolute top-4 right-4 flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-700 cursor-pointer transition-colors z-20"
-              aria-label="Close"
-            >
-              <X className="h-4 w-4" />
-            </button>
+          <div className="flex flex-none md:flex-1 flex-col overflow-visible md:overflow-hidden bg-white dark:bg-gray-900 p-6 pt-5 min-h-[300px] md:min-h-0 relative border-t md:border-t-0 md:border-l border-gray-200 dark:border-gray-800">
 
             {/* Top Right Yellow Badge */}
             <div className="flex justify-end mb-4 mr-6 shrink-0">
@@ -237,14 +237,14 @@ export function FindPeopleModal() {
               </div>
             </div>
 
-            {/* Info bar — SINGLE row matching screenshot */}
-            <div className="flex items-center justify-between gap-3 mb-4 shrink-0">
-              <p className="text-[13px] font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap">
-                Found 0 companies. Click preview to view results
+            {/* Info bar — responsive layout */}
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 mb-4 shrink-0">
+              <p className="text-[13px] font-medium text-gray-600 dark:text-gray-400">
+                Found 0 people. Click preview to view results
               </p>
               <div className="flex items-center gap-1.5 shrink-0">
                 <Unlock className="h-3.5 w-3.5 text-[#cc822b] shrink-0" />
-                <p className="text-[13px] font-medium text-[#cc822b] dark:text-[#d97706] whitespace-nowrap">
+                <p className="text-[13px] font-medium text-[#cc822b] dark:text-[#d97706]">
                   Unlock <span className="font-bold">100,000 leads</span> with Enterprise Plan*
                 </p>
               </div>
@@ -271,7 +271,7 @@ export function FindPeopleModal() {
               </div>
 
               {/* Empty state */}
-              <div className="flex flex-col items-center justify-center overflow-y-auto bg-white dark:bg-gray-900 pt-8 pb-14">
+              <div className="flex flex-col items-center justify-center overflow-visible md:overflow-y-auto bg-white dark:bg-gray-900 pt-8 pb-14">
                 <EmptyState />
               </div>
             </div>

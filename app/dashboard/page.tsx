@@ -111,7 +111,7 @@ function OnboardingCard() {
 
       {/* Checklist */}
       <div className="px-4 pb-4 pt-2">
-        <div className="grid grid-cols-2 gap-y-3 gap-x-4 ml-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4 ml-2 sm:ml-12">
           {checklistItems.map((item) => (
             <div key={item.id} className="flex items-center gap-2.5">
               {item.done ? (
@@ -237,14 +237,14 @@ export default function DashboardPage() {
 
           {/* Search + view toggle */}
           <div className="flex items-center gap-2">
-            <div className="relative">
+            <div className="relative flex-1 sm:flex-none w-full sm:w-auto">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400 dark:text-gray-500 pointer-events-none" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search grids and workbooks..."
-                className="h-9 w-64 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 pl-9 pr-4 text-[12px] text-gray-700 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500 outline-none focus:border-gray-300 dark:focus:border-gray-600 focus:bg-white dark:focus:bg-gray-900 cursor-text transition-all"
+                className="h-9 w-full sm:w-64 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 pl-9 pr-4 text-[12px] text-gray-700 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500 outline-none focus:border-gray-300 dark:focus:border-gray-600 focus:bg-white dark:focus:bg-gray-900 cursor-text transition-all"
               />
             </div>
             {/* Single list-view icon button — matches screenshot */}
@@ -273,7 +273,7 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="overflow-x-auto animate-in fade-in duration-500">
-            <table className="w-full table-fixed">
+            <table className="w-full table-fixed min-w-[700px]">
               {/* Column headers */}
               <colgroup>
                 <col className="w-auto" />

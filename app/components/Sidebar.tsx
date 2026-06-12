@@ -148,7 +148,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       >
         {/* ── Logo & Workspace Header ── */}
         <div className="flex flex-col">
-          <div className="flex items-center justify-between px-5 h-16 shrink-0 border-b border-gray-200 dark:border-gray-800">
+          <div className="flex items-center justify-between px-5 h-14 shrink-0 border-b border-gray-200 dark:border-gray-800">
             <Image
               src="/bitscale-logo-light.svg"
               alt="Bitscale"
@@ -165,7 +165,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             </button>
           </div>
 
-          <div className="px-3 py-2 border-b border-gray-200 dark:border-gray-800">
+          <div className="px-3 pt-2 pb-1 border-b border-gray-200 dark:border-gray-800">
             <button className="flex w-full items-center justify-between rounded-xl px-2 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-800/60 cursor-pointer transition-colors group">
               <div className="flex items-center gap-3">
                 {/* Two overlapping circular avatars */}
