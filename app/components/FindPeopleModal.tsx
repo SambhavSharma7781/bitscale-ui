@@ -156,7 +156,7 @@ function FilterRow({
   const Icon = section.icon;
 
   return (
-    <div className="border-b border-gray-100 last:border-0">
+    <div className="border-b border-gray-200 last:border-0">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -344,7 +344,7 @@ export function FindPeopleModal() {
         aria-modal="true"
         aria-label="Find People"
         className={cn(
-          "fixed inset-4 sm:inset-8 md:inset-[5vh_5vw] z-50 flex rounded-2xl bg-white shadow-2xl shadow-black/20 ring-1 ring-black/8 overflow-hidden transition-all duration-200",
+          "fixed inset-4 sm:inset-8 md:inset-[5vh_5vw] z-50 flex rounded-2xl bg-white shadow-[0_32px_64px_-12px_rgba(0,0,0,0.28),0_0_0_1px_rgba(0,0,0,0.06)] overflow-hidden transition-all duration-200",
           findPeopleOpen
             ? "opacity-100 scale-100 pointer-events-auto"
             : "opacity-0 scale-95 pointer-events-none"
