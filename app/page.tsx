@@ -10,8 +10,8 @@ import {
   CheckCircle2,
   CircleDashed,
   BarChart3,
-  ChevronRight,
 } from "lucide-react";
+import { QuickActionsSection } from "@/app/components/QuickActionsSection";
 
 export const metadata: Metadata = {
   title: "Home — Bitscale Clone",
@@ -23,7 +23,6 @@ const stats = [
     label: "Total Grids",
     value: "24",
     change: "+3 this week",
-    trend: "up",
     icon: Grid3X3,
     color: "blue",
   },
@@ -31,7 +30,6 @@ const stats = [
     label: "Companies Found",
     value: "12,847",
     change: "+1,204 today",
-    trend: "up",
     icon: Building2,
     color: "violet",
   },
@@ -39,7 +37,6 @@ const stats = [
     label: "People Enriched",
     value: "8,391",
     change: "+489 today",
-    trend: "up",
     icon: Users,
     color: "emerald",
   },
@@ -47,7 +44,6 @@ const stats = [
     label: "Automations Run",
     value: "156",
     change: "Last 30 days",
-    trend: "neutral",
     icon: Zap,
     color: "amber",
   },
@@ -88,37 +84,6 @@ const recentGrids = [
     status: "completed",
     rows: 2103,
     updatedAt: "4 days ago",
-  },
-];
-
-const quickActions = [
-  {
-    title: "Find Companies",
-    description: "Search and filter from 50M+ companies",
-    icon: Building2,
-    href: "/companies",
-    gradient: "from-blue-500 to-blue-600",
-  },
-  {
-    title: "Find People",
-    description: "Discover contacts with rich enrichment",
-    icon: Users,
-    href: "/people",
-    gradient: "from-violet-500 to-violet-600",
-  },
-  {
-    title: "Run Playbook",
-    description: "Automate your GTM workflows",
-    icon: Zap,
-    href: "/playbooks",
-    gradient: "from-emerald-500 to-emerald-600",
-  },
-  {
-    title: "View Analytics",
-    description: "Credits usage and performance",
-    icon: BarChart3,
-    href: "/analytics",
-    gradient: "from-amber-500 to-orange-500",
   },
 ];
 
@@ -177,7 +142,7 @@ export default function HomePage() {
             >
               <div className="flex items-start justify-between mb-3">
                 <div className={`h-9 w-9 rounded-lg flex items-center justify-center ${colorMap[stat.color]}`}>
-                  <Icon className="h-4.5 w-4.5 h-[18px] w-[18px]" />
+                  <Icon className="h-[18px] w-[18px]" />
                 </div>
                 <ArrowUpRight className="h-4 w-4 text-gray-300 group-hover:text-gray-400 transition-colors" />
               </div>
@@ -189,37 +154,8 @@ export default function HomePage() {
         })}
       </div>
 
-      {/* Quick actions */}
-      <div>
-        <h2 className="text-sm font-semibold text-gray-700 mb-3">Quick Actions</h2>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          {quickActions.map((action) => {
-            const Icon = action.icon;
-            return (
-              <a
-                key={action.title}
-                href={action.href}
-                className="group relative overflow-hidden rounded-xl border border-gray-100 bg-white p-4 shadow-sm hover:shadow-md hover:border-gray-200 transition-all duration-200 flex flex-col gap-3"
-              >
-                <div
-                  className={`h-9 w-9 rounded-lg bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-sm`}
-                >
-                  <Icon className="h-4 w-4 text-white" />
-                </div>
-                <div>
-                  <p className="text-[13px] font-semibold text-gray-900 group-hover:text-gray-800">
-                    {action.title}
-                  </p>
-                  <p className="text-[11px] text-gray-500 mt-0.5 leading-snug">
-                    {action.description}
-                  </p>
-                </div>
-                <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-300 group-hover:text-gray-400 group-hover:translate-x-0.5 transition-all" />
-              </a>
-            );
-          })}
-        </div>
-      </div>
+      {/* Quick actions — client component so it can open modals */}
+      <QuickActionsSection />
 
       {/* Recent grids */}
       <div>

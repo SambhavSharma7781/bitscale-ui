@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, Bell, ChevronDown, Plus, Search, Users, Building2 } from "lucide-react";
+import { Menu, Bell, ChevronDown, Plus, Users, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { useModal } from "@/app/context/ModalContext";
 
 interface TopBarProps {
   onMenuClick: () => void;
@@ -13,6 +14,7 @@ interface TopBarProps {
 
 export function TopBar({ onMenuClick }: TopBarProps) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const { openFindPeople, openFindCompanies } = useModal();
 
   const creditsUsed = 450000;
   const creditsTotal = 5500000;
@@ -76,8 +78,10 @@ export function TopBar({ onMenuClick }: TopBarProps) {
 
         {/* Find Companies */}
         <Button
+          id="topbar-find-companies-btn"
           variant="outline"
           size="sm"
+          onClick={openFindCompanies}
           className="hidden md:inline-flex items-center gap-2 border-gray-200 bg-white text-gray-700 text-[13px] font-medium shadow-none hover:bg-gray-50 hover:border-gray-300 transition-all h-8 px-3 rounded-lg"
         >
           <Building2 className="h-3.5 w-3.5 text-gray-500" />
@@ -86,8 +90,10 @@ export function TopBar({ onMenuClick }: TopBarProps) {
 
         {/* Find People */}
         <Button
+          id="topbar-find-people-btn"
           variant="outline"
           size="sm"
+          onClick={openFindPeople}
           className="hidden md:inline-flex items-center gap-2 border-gray-200 bg-white text-gray-700 text-[13px] font-medium shadow-none hover:bg-gray-50 hover:border-gray-300 transition-all h-8 px-3 rounded-lg"
         >
           <Users className="h-3.5 w-3.5 text-gray-500" />
