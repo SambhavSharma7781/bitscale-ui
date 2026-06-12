@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
 import {
   Search,
   Plus,
@@ -89,45 +90,45 @@ function OnboardingCard() {
   return (
     <div className="rounded-xl border border-gray-100 dark:border-gray-800 bg-[#f6f9fc] dark:bg-gray-900 shadow-sm overflow-hidden transition-colors">
       {/* Header */}
-      <div className="flex items-start gap-3 px-4 py-3 border-b border-gray-100 dark:border-gray-800">
-        <div className="h-8 w-8 rounded-lg bg-gray-900 dark:bg-gray-700 flex items-center justify-center shrink-0 mt-0.5">
-          <CheckCircle2 className="h-4 w-4 text-white" />
+      <div className="flex items-start gap-3 px-4 pt-4 pb-2">
+        <div className="h-9 w-9 rounded-full bg-[#3c4758] dark:bg-gray-700 flex items-center justify-center shrink-0">
+          <CheckCircle2 className="h-5 w-5 text-white" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-[13px] font-semibold text-gray-900 dark:text-gray-50">Complete product demo</p>
-          <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5 leading-snug">
+          <p className="text-[14px] font-semibold text-gray-900 dark:text-gray-50 tracking-tight">Complete product demo</p>
+          <p className="text-[12px] text-gray-500 dark:text-gray-400 mt-0.5 leading-snug">
             92% of users nailed BitScale after this walkthrough
           </p>
+          
           {/* Progress bar */}
-          <div className="mt-2 flex items-center gap-2">
-            <div className="flex-1 h-1.5 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-green-500 to-emerald-400 transition-all"
-                style={{ width: "75%" }}
-              />
+          <div className="flex items-center gap-3 mt-4">
+            <div className="flex-1 h-[5px] bg-[#e2e8f0] dark:bg-gray-700 rounded-full overflow-hidden">
+              <div className="h-full bg-[#487f5e] rounded-full" style={{ width: "75%" }} />
             </div>
-            <span className="text-[10px] font-semibold text-gray-500 dark:text-gray-400 tabular-nums">75%</span>
+            <span className="text-[12px] font-semibold text-[#487f5e] dark:text-green-400">75%</span>
           </div>
         </div>
       </div>
-      {/* Checklist grid */}
-      <div className="grid grid-cols-2 gap-x-4 gap-y-2 px-4 py-3">
-        {checklistItems.map((item) => (
-          <div key={item.id} className="flex items-center gap-2">
-            {item.done ? (
-              <CheckCircle2 className="h-3.5 w-3.5 text-green-500 dark:text-green-400 shrink-0" />
-            ) : (
-              <Circle className="h-3.5 w-3.5 text-gray-300 dark:text-gray-600 shrink-0" />
-            )}
-            <span
-              className={`text-[12px] leading-tight ${
-                item.done ? "text-gray-700 dark:text-gray-300" : "text-gray-400 dark:text-gray-500"
-              }`}
-            >
-              {item.label}
-            </span>
-          </div>
-        ))}
+
+      {/* Checklist */}
+      <div className="px-4 pb-4 pt-2">
+        <div className="grid grid-cols-2 gap-y-3 gap-x-4 ml-12">
+          {checklistItems.map((item) => (
+            <div key={item.id} className="flex items-center gap-2.5">
+              {item.done ? (
+                <CheckCircle2 className="h-[16px] w-[16px] text-white fill-[#357ba8] shrink-0" />
+              ) : (
+                <Circle className="h-[16px] w-[16px] text-gray-300 dark:text-gray-600 shrink-0" />
+              )}
+              <span className={cn(
+                "text-[13px] font-medium tracking-tight",
+                item.done ? "text-[#1e293b] dark:text-gray-300" : "text-[#64748b] dark:text-gray-500"
+              )}>
+                {item.label}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

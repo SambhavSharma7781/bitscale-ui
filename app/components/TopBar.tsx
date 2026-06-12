@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTheme } from "next-themes";
 import {
-  Menu, Bell, ChevronDown, Moon, Sun,
+  Menu, Bell, ChevronDown, Moon, Sun, Coins
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -47,32 +47,18 @@ export function TopBar({ onMenuClick }: TopBarProps) {
 
       {/* Right — credits, badge, actions, avatar */}
       <div className="flex items-center gap-2 sm:gap-3">
-        {/* Credit counter */}
-        <div className="hidden sm:flex items-center gap-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-1.5">
-          <div className="flex flex-col items-end gap-0.5">
-            <span className="text-[11px] font-medium text-gray-500 dark:text-gray-400 leading-none">Credits</span>
-            <span className="text-[13px] font-semibold text-gray-800 dark:text-gray-100 leading-none tabular-nums">
-              {formatCredits(creditsUsed)}
-              <span className="font-normal text-gray-400 dark:text-gray-500 text-[11px]">/{formatCredits(creditsTotal)}</span>
+        {/* Credits & Booster Plan Combined Pill */}
+        <div className="hidden sm:flex items-center gap-3 rounded-full bg-[#f1f5f2] dark:bg-green-900/30 pl-3 pr-1.5 py-1.5">
+          <div className="flex items-center gap-2 pl-1">
+            <Coins className="h-[18px] w-[18px] text-[#42795a] dark:text-green-400" strokeWidth={2} />
+            <span className="text-[15px] font-medium text-[#42795a] dark:text-green-400 tracking-tight">
+              {formatCredits(creditsUsed)}/{formatCredits(creditsTotal)}
             </span>
           </div>
-          <div className="h-8 w-px bg-gray-200 dark:bg-gray-700" />
-          <div className="flex flex-col gap-1">
-            <div className="h-1.5 w-16 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-blue-500 to-violet-500 transition-all"
-                style={{ width: `${creditPercent}%` }}
-              />
-            </div>
-            <span className="text-[10px] text-gray-400 dark:text-gray-500 leading-none">{creditPercent}% used</span>
-          </div>
+          <button className="flex items-center justify-center rounded-full bg-[#42795a] dark:bg-green-600 px-3.5 py-1.5 hover:bg-[#36634a] dark:hover:bg-green-500 transition-colors">
+            <span className="text-[13px] font-medium text-white tracking-wide">Booster Plan</span>
+          </button>
         </div>
-
-        {/* Booster Plan badge */}
-        <Badge className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950 px-2.5 py-1 text-[12px] font-semibold text-green-700 dark:text-green-400 shadow-none hover:bg-green-100 dark:hover:bg-green-900 transition-colors cursor-pointer">
-          <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-          Booster Plan
-        </Badge>
 
         {/* Divider */}
         <div className="hidden md:block h-6 w-px bg-gray-200 dark:bg-gray-700" />
