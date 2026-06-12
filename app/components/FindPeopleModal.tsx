@@ -154,10 +154,10 @@ export function FindPeopleModal() {
         {/* Absolute Close button in top right of modal */}
         <button
           onClick={closeFindPeople}
-          className="absolute top-5 right-5 flex h-7 w-7 items-center justify-center rounded-md bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-700 cursor-pointer transition-colors z-50"
+          className="absolute top-4 right-4 flex h-[22px] w-[22px] items-center justify-center rounded-full bg-[#f1f5f9] dark:bg-gray-800 text-gray-500 hover:bg-[#e2e8f0] dark:hover:bg-gray-700 hover:text-gray-700 cursor-pointer transition-colors z-50"
           aria-label="Close"
         >
-          <X className="h-4 w-4" />
+          <X strokeWidth={2.5} className="h-3 w-3" />
         </button>
 
         {/* ── Full Height Split Layout ── */}
@@ -225,7 +225,7 @@ export function FindPeopleModal() {
           </div>
 
           {/* RIGHT PANEL */}
-          <div className="flex flex-none md:flex-1 flex-col overflow-visible md:overflow-hidden bg-white dark:bg-gray-900 p-6 pt-5 min-h-[300px] md:min-h-0 relative border-t md:border-t-0 md:border-l border-gray-200 dark:border-gray-800">
+          <div className="flex flex-none md:flex-1 flex-col overflow-visible md:overflow-hidden bg-white dark:bg-gray-900 p-6 pt-5 min-h-[300px] md:min-h-0 relative">
 
             {/* Top Right Yellow Badge */}
             <div className="flex justify-end mb-4 mr-6 shrink-0">
