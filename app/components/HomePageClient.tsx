@@ -13,10 +13,12 @@ import {
   Pencil,
   Copy,
   Trash2,
+  ChevronRight,
 } from "lucide-react";
 import { AnimatedCounter } from "@/app/components/AnimatedCounter";
 import { QuickActionsSection } from "@/app/components/QuickActionsSection";
 import { useGrids } from "@/app/context/GridContext";
+import { GridIcon } from "@/app/components/GridIcon";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -168,9 +170,10 @@ export function HomePageClient({ stats }: { stats: Stat[] }) {
                       >
                         <td className="px-5 py-3.5">
                           <div className="flex items-center gap-2.5">
-                            <div className={`h-7 w-7 rounded-md ${grid.iconBg} flex items-center justify-center text-[10px] font-bold ${grid.iconColor} shrink-0`}>
-                              {grid.icon}
-                            </div>
+                            {grid.isWorkbook && (
+                              <ChevronRight className="h-4 w-4 text-gray-400 dark:text-gray-500 -mr-1 shrink-0" />
+                            )}
+                            <GridIcon row={grid} />
                             <span className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors text-[13px] truncate max-w-[180px] sm:max-w-xs">
                               {grid.name}
                             </span>

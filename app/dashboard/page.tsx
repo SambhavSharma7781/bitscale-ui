@@ -12,6 +12,7 @@ import {
   LayoutList,
   LayoutGrid,
   ChevronUp,
+  ChevronRight,
   CheckCircle2,
   Circle,
   Clock,
@@ -22,6 +23,7 @@ import {
 } from "lucide-react";
 import { useModal } from "@/app/context/ModalContext";
 import { useGrids } from "@/app/context/GridContext";
+import { GridIcon } from "@/app/components/GridIcon";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -321,6 +323,9 @@ export default function DashboardPage() {
                     {/* Name */}
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-3">
+                        {row.isWorkbook && (
+                          <ChevronRight className="h-4 w-4 text-gray-400 dark:text-gray-500 shrink-0 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" />
+                        )}
                         {/* Star */}
                         <button
                           type="button"
@@ -328,7 +333,9 @@ export default function DashboardPage() {
                             e.stopPropagation();
                             toggleStar(row.id);
                           }}
-                          className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                          className={`shrink-0 transition-opacity ${
+                            row.starred ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                          }`}
                           aria-label="Toggle star"
                         >
                           <Star
@@ -340,12 +347,7 @@ export default function DashboardPage() {
                           />
                         </button>
 
-                        {/* Icon badge */}
-                        <div
-                          className={`h-7 w-7 rounded-md ${row.iconBg} flex items-center justify-center text-[10px] font-bold ${row.iconColor} shrink-0`}
-                        >
-                          {row.icon}
-                        </div>
+                        <GridIcon row={row} />
 
                         {/* Name text */}
                         <span className="text-[13px] font-medium text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate max-w-[260px]">

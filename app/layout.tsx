@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { LayoutShell } from "./components/LayoutShell";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -31,9 +32,11 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <TooltipProvider delayDuration={300}>
-          <LayoutShell>{children}</LayoutShell>
-        </TooltipProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <TooltipProvider delayDuration={300}>
+            <LayoutShell>{children}</LayoutShell>
+          </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
